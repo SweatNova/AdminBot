@@ -9,6 +9,7 @@ ConfigType = TypeVar("ConfigType", bound=BaseModel)
 
 class BotConfig(BaseModel):
 	token: SecretStr
+	database_url: SecretStr
 
 @lru_cache
 def parse_config_file() -> dict:

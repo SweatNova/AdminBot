@@ -1,15 +1,27 @@
+from sqlalchemy import BigInteger, String, Boolean
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import String, BigInteger
+from sqlalchemy.ext.mutable import MutableDict
 
 class Base(DeclarativeBase):
-    pass
+	pass
 
 class Member(Base):
-    __tablename__ = "members"
+	__tablename__ = "members"
 
-    chat_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    user_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+	chat_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+	user_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+	username: Mapped[str | None] = mapped_column(String(64), index=True)
+	role: Mapped[str] = mapped_column(String(32), default="member")
 
-    username: Mapped[str | None] = mapped_column(String(64), index=True)
-    role: Mapped[str] = mapped_column(String(64))
+	user_permissions: Mapped[dict] = mapped_column(
+		MutableDict.as_mutable(JSONB),
+		default=dict,
+		server_default="{}"
+	)
+	admin_permissions: Mapped[dict] = mapped_column(
+		MutableDict.as_mutable(JSONB),
+		default=dict,
+		server_default="{}"
+	)
