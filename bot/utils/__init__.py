@@ -1,12 +1,7 @@
 from .some_func import (
 	is_admin,
-	role_to_db,
+	status_to_db,
 	extract_admin_permissions, 
-	extract_user_permissions
+	extract_user_permissions,
+	get_username_or_id
 )
-
-__all__ = [
-	"role_to_db",
-	"extract_admin_permissions",
-	"extract_user_permissions"
-]

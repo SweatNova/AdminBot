@@ -1,16 +1,19 @@
-from aiogram import Router, F
+from aiogram import Router, F, Bot
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
-
 from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
 
-from ...keyboards.basic_keyboards import all_help, back_button
+from bot.db import get_session
+from bot.db.crud_settings import upsert_settings, get_settings
+
+from bot.keyboards.basic_keyboards import all_help, back_button
+
+from bot.middleware.some_middlewares import ChatsSettingsMiddleware
 
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
-
-#команда - все ее колбеки
+router.message.middleware(ChatsSettingsMiddleware())
 
 @router.message(Command("start"))
 async def start(message: Message):

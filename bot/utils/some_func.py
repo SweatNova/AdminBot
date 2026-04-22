@@ -1,5 +1,6 @@
 from aiogram.types import Message, User
 from aiogram import Bot
+from bot.db.crud import get_member_by_username
 
 async def is_admin(message: Message):
 	member = await message.bot.get_chat_member(
@@ -8,7 +9,7 @@ async def is_admin(message: Message):
 	)
 	return member.status in ("administrator", "creator")
 
-def role_to_db(status: str) -> str:
+def status_to_db(status: str) -> str:
 	mapping = {
 		"creator": "creator",
         "administrator": "admin",
@@ -19,6 +20,10 @@ def role_to_db(status: str) -> str:
 	return mapping.get(status, "user")
 
 def extract_admin_permissions(tg_member) -> dict:
+	if tg_member.status == "creator":
+		return {
+			"all": True
+		}
 	return {
 		"can_change_info": getattr(tg_member,
 							"can_change_info", False),
@@ -60,3 +65,17 @@ def extract_user_permissions(tg_member) -> dict:
 		"can_change_info": getattr(tg_member,
 							"can_change_info", True)
 	}
+
+async def get_username_or_id(session, chat_id: int, target: str):
+    if target.startswith("@"):
+        member = await get_member_by_username(
+            session=session,
+            chat_id=chat_id,
+            username=target[1:]
+        )
+        if not member:
+            raise ValueError("Пользователь не найден")
+        return member.user_id, member.username
+    elif target.isdigit():
+        return int(target), None
+    raise ValueError("Некорректный формат")

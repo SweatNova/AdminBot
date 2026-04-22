@@ -14,10 +14,7 @@ async def main():
 	await init_db()
 	for router in get_routers():
 		dp.include_router(router)
-	await dp.start_polling(
-		bot,
-		allowed_updates=["message", "chat_member", "my_chat_member"]
-	)
+	await dp.start_polling(bot)
 
 if __name__ == "__main__":
 	logging.basicConfig(level=logging.INFO, stream=sys.stdout)
