@@ -1,6 +1,8 @@
 from aiogram.types import Message, User
 from aiogram import Bot
+from bot.db import get_session
 from bot.db.crud import get_member_by_username
+from bot.db.crud_settings import get_settings, upsert_settings, delete_settings
 
 async def is_admin(message: Message):
 	member = await message.bot.get_chat_member(
@@ -67,15 +69,35 @@ def extract_user_permissions(tg_member) -> dict:
 	}
 
 async def get_username_or_id(session, chat_id: int, target: str):
-    if target.startswith("@"):
-        member = await get_member_by_username(
-            session=session,
-            chat_id=chat_id,
-            username=target[1:]
-        )
-        if not member:
-            raise ValueError("Пользователь не найден")
-        return member.user_id, member.username
-    elif target.isdigit():
-        return int(target), None
-    raise ValueError("Некорректный формат")
+	if target.startswith("@"):
+		member = await get_member_by_username(
+			session=session,
+			chat_id=chat_id,
+			username=target[1:]
+		)
+		if not member:
+			raise ValueError("Пользователь не найден")
+		return member.user_id, member.username
+	elif target.isdigit():
+		return int(target), None
+	raise ValueError("Некорректный формат")
+
+async def chat_settings_switch(message: Message, bot: Bot, chat_arg: str):
+	args = message.text.lower().split(maxsplit=1)
+	if len(args) != 2:
+		return await message.reply("Выберите режим on/off")
+	if not args[1] in ["on", "off"]:
+		return await message.reply("❌ Неизвестный режим")
+
+	async with get_session() as session:
+		chat_settings = await get_settings(session, message.chat.id)
+		value = getattr(chat_settings, chat_arg, None)
+		chat_dict = dict(value)
+		setting = args[0][1:]
+		if args[1] == "on":
+			chat_dict[setting] = True
+		else:
+			chat_dict[setting] = False
+		await upsert_settings(session, message.chat.id, chat_dict)
+	await message.reply(f"✅ Настройка {args[0]} переключена")
+

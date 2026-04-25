@@ -1,13 +1,18 @@
 from aiogram import Router, Bot
 from aiogram.types import ChatMemberUpdated
-from aiogram.enums import ChatType
 
+from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
-from bot.utils import status_to_db
-from bot.db.database import get_session
+
+from bot.db import get_session
 from bot.db.crud import upsert_member
 from bot.db.crud_bot import upsert_bot
-from bot.utils import extract_admin_permissions, extract_user_permissions
+from bot.db.crud_settings import get_settings, upsert_settings
+from bot.utils import (
+	status_to_db,
+	extract_admin_permissions,
+	extract_user_permissions
+)
 
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
@@ -33,6 +38,22 @@ async def members_update(event: ChatMemberUpdated):
 		await upsert_member(session, chat_id, user_id, username,
 							role, user_permissions, admin_permissions)
 
+async def when_bot_added(session, bot: Bot, chat_id: int):
+	admins = await bot.get_chat_administrators(chat_id)
+	for admin in admins:
+		await upsert_member(
+			session,
+			chat_id,
+			admin.user.id,
+			admin.user.username,
+			status_to_db(admin.status),
+			extract_user_permissions(admin),
+			extract_admin_permissions(admin)
+		)
+	chat_settings = await get_settings(session, chat_id)
+	if not chat_settings:
+		await upsert_settings(session, chat_id, None)
+
 @router.my_chat_member()
 async def my_members_update(event: ChatMemberUpdated, bot: Bot):
 	chat_id = event.chat.id
@@ -56,15 +77,4 @@ async def my_members_update(event: ChatMemberUpdated, bot: Bot):
 						 bot_role, user_permissions, admin_permissions)
 		if old_status in ("left", "kicked") and \
 		   new_status in ("member", "administrator", "creator"):
-			admins = await bot.get_chat_administrators(chat_id)
-			for admin in admins:
-				user_id = admin.user.id
-				username = admin.user.username
-				role = status_to_db(admin.status)
-				user_permissions = \
-					extract_user_permissions(admin)
-				admin_permissions = \
-					extract_admin_permissions(admin)
-				await upsert_member(session, chat_id, user_id, username,
-									role, user_permissions, admin_permissions)
-
+			await when_bot_added(session, bot, chat_id)

@@ -3,5 +3,6 @@ from .some_func import (
 	status_to_db,
 	extract_admin_permissions, 
 	extract_user_permissions,
-	get_username_or_id
+	get_username_or_id,
+	chat_settings_switch
 )

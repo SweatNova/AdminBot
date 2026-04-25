@@ -9,11 +9,8 @@ from bot.db.crud_settings import upsert_settings, get_settings
 
 from bot.keyboards.basic_keyboards import all_help, back_button
 
-from bot.middleware.some_middlewares import ChatsSettingsMiddleware
-
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
-router.message.middleware(ChatsSettingsMiddleware())
 
 @router.message(Command("start"))
 async def start(message: Message):
@@ -43,6 +40,7 @@ async def help_callback(callback: CallbackQuery):
 			"до администратора. \n-/demote <reply/username>:\nПонизить "
 			"администратора до участника. \n-/adminlist: Показать список "
 			"админов.\n"
+			"-/anonadmin <on/off>: \nОбрабатывать анонимных админов с полными "				"правами, по умолчанию включено, не рекомендуется менять.\n"
 			"-/adminerror <on/off>: \nОтправлять или нет ошибки при вызове "
 			"админ команд обычными юзерами. по умолчанию включено.",
 			reply_markup=back_button("help")
@@ -65,6 +63,6 @@ async def info(message: Message):
         "Автор: @F3m_b0y\n"
         "Лицензия: MIT\n"
         "Описание: Этот бот помогает администрировать вашу группу.\n"
-        "Версия: 0.1"
+        "Версия: 0.4.1"
 	)
 

@@ -7,8 +7,11 @@ from aiogram.exceptions import TelegramBadRequest
 from bot.db.database import get_session
 from bot.db.crud import upsert_member
 from bot.db.crud_settings import upsert_settings, get_settings
-from bot.utils import extract_admin_permissions, get_username_or_id
-
+from bot.utils import (
+	extract_admin_permissions,
+	get_username_or_id,
+	chat_settings_switch,
+)
 from bot.middleware import AdminMiddleware
 
 router = Router()
@@ -89,20 +92,9 @@ async def admin_list(message: Message, bot: Bot):
 	)
 	await message.reply("✅ Вот весь список админов чата: \n" + text)
 
+@router.message(F.text.startswith("/anonadmin"))
+async def anon_admin(message: Message, bot: Bot):
+	await chat_settings_switch(message, bot, "admin")
 @router.message(F.text.startswith("/adminerror"))
 async def admin_error(message: Message, bot: Bot):
-	args = message.text.lower().split(maxsplit=1)
-	if len(args) != 2:
-		return await message.reply("Выберите режим on/off")
-	if not args[1] in ["on", "off"]:
-		return await message.reply("❌ Неизвестный режим")
-
-	async with get_session() as session:
-		chat_settings = await get_settings(session, message.chat.id)
-		admin = dict(chat_settings.admin)
-		if args[1] == "on":
-			admin["adminerror"] = True
-		else:
-			admin["adminerror"] = False
-		await upsert_settings(session, message.chat.id, admin)
-	await message.reply("✅ Настройка adminerror переключена")
+	await chat_settings_switch(message, bot, "admin")

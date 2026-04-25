@@ -35,18 +35,3 @@ class AdminMiddleware(BaseMiddleware):
 				return
 			return
 		return await handler(event, data)
-
-class ChatsSettingsMiddleware(BaseMiddleware):
-	async def __call__(
-		self,
-		handler: Callable[[Message, dict[str, Any]], Awaitable[Any]],
-		event: Message,
-		data: dict[str, Any]
-	) -> Any:
-		chat_id = event.chat.id
-		async with get_session() as session:
-			chat_settings = await get_settings(session, chat_id)
-			if chat_settings:
-				return await handler(event, data)
-			await upsert_settings(session, chat_id, None)
-
