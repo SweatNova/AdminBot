@@ -7,3 +7,4 @@ version's list:
 0.3 - database interface update
 0.4 - more database features and overall improvements to the bot, new commands
 0.4.5 - optimization and general improvements
+0.4.6 - partially added the “Bans” commands tab (note: temporary ban does not work in the /ban command)
