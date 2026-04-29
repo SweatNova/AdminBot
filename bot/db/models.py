@@ -1,5 +1,7 @@
 from sqlalchemy import BigInteger, String, Boolean
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import TIMESTAMP
+from datetime import datetime
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.mutable import MutableDict
@@ -26,6 +28,10 @@ class Member(Base):
 		default=dict,
 		server_default="{}"
 	)
+	restricted_status: Mapped[str] = mapped_column(String(32), index=True)
+	admin_who_restricted: Mapped[str] = mapped_column(String(64), index=True)
+	start_time: Mapped[datetime] = mapped_column(TIMESTAMP, index=True)
+	end_time: Mapped[datetime] = mapped_column(TIMESTAMP, index=True)
 
 class BotChatInfo(Base):
 	__tablename__ = "bot_chats_info"

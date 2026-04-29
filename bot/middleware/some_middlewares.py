@@ -22,7 +22,7 @@ class AdminMiddleware(BaseMiddleware):
 			chat_settings = await get_settings(session, event.chat.id)
 			adminerror = chat_settings.admin["adminerror"]
 			
-		if not await is_admin(event):
+		if not await is_admin(data["bot"], event.chat.id, event.from_user.id):
 			if adminerror:
 				await event.reply("❌ У вас недостаточно прав")
 				return

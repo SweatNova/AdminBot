@@ -1,13 +1,13 @@
 from aiogram.types import Message, User
 from aiogram import Bot
 from bot.db import get_session
-from bot.db.crud import get_member_by_username
+from bot.db.crud_members import get_member_by_username
 from bot.db.crud_settings import get_settings, upsert_settings, delete_settings
 
-async def is_admin(message: Message):
-	member = await message.bot.get_chat_member(
-		chat_id=message.chat.id,
-		user_id=message.from_user.id
+async def is_admin(bot: Bot, chat_id: int, user_id: int) -> bool:
+	member = await bot.get_chat_member(
+		chat_id=chat_id,
+		user_id=user_id
 	)
 	return member.status in ("administrator", "creator")
 
@@ -68,7 +68,7 @@ def extract_user_permissions(tg_member) -> dict:
 							"can_change_info", True)
 	}
 
-async def get_username_or_id(session, chat_id: int, target: str):
+async def get_id(session, chat_id, target):
 	if target.startswith("@"):
 		member = await get_member_by_username(
 			session=session,
@@ -76,11 +76,11 @@ async def get_username_or_id(session, chat_id: int, target: str):
 			username=target[1:]
 		)
 		if not member:
-			raise ValueError("Пользователь не найден")
-		return member.user_id, member.username
+			return "❌ Пользователь не найден"
+		return member.user_id
 	elif target.isdigit():
-		return int(target), None
-	raise ValueError("Некорректный формат")
+		return int(target)
+	return "❌ Некорректный формат"
 
 async def chat_settings_switch(message: Message, bot: Bot, chat_arg: str):
 	args = message.text.lower().split(maxsplit=1)
@@ -100,4 +100,3 @@ async def chat_settings_switch(message: Message, bot: Bot, chat_arg: str):
 			chat_dict[setting] = False
 		await upsert_settings(session, message.chat.id, chat_dict)
 	await message.reply(f"✅ Настройка {args[0]} переключена")
-

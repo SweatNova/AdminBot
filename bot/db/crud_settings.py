@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .models import ChatSettings
 
 async def upsert_settings(session: AsyncSession, chat_id: int,
-							admin: dict | None) -> ChatSettings:
+						  admin: dict | None = None) -> ChatSettings:
 	if admin is None:
 		admin = {"anonadmin": False, "adminerror": True}
 	chat_settings = await get_settings(session, chat_id)
@@ -15,7 +15,7 @@ async def upsert_settings(session: AsyncSession, chat_id: int,
 	return chat_settings
 
 async def update_settings(session: AsyncSession, chat_id: int,
-							admin: dict | None) -> None:
+						  admin: dict | None) -> None:
 	chat_settings = ChatSettings(
 		chat_id=chat_id,
 		admin=admin,

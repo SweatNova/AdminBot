@@ -5,7 +5,7 @@ from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
 
 from bot.db import get_session
-from bot.db.crud import upsert_member
+from bot.db.crud_members import upsert_member, upsert_punishments
 from bot.db.crud_bot import upsert_bot
 from bot.db.crud_settings import get_settings, upsert_settings
 from bot.utils import (
@@ -22,14 +22,15 @@ async def members_update(event: ChatMemberUpdated):
 	chat_id = event.chat.id
 	user_id = event.new_chat_member.user.id
 	username = event.new_chat_member.user.username
-	status = event.new_chat_member.status
-	role = status_to_db(status)
-
-	if status in ("administrator", "creator"):
+	new_status = event.new_chat_member.status
+	old_status = event.old_chat_member.status
+	role = status_to_db(new_status)
+	
+	if new_status in ("administrator", "creator"):
 		admin_permissions = extract_admin_permissions(event.new_chat_member)
 	else:
 		admin_permissions = {}
-	if status not in ("left", "kicked"):
+	if new_status not in ("left", "kicked"):
 		user_permissions = extract_user_permissions(event.new_chat_member)
 	else:
 		user_permissions = {}
@@ -37,6 +38,10 @@ async def members_update(event: ChatMemberUpdated):
 	async with get_session() as session:
 		await upsert_member(session, chat_id, user_id, username,
 							role, user_permissions, admin_permissions)
+		if old_status in ("left", "kicked") and \
+		   new_status in ("member", "administrator", "creator"):
+			await upsert_punishments(session, chat_id, user_id,
+									 None, None, None, None)
 
 async def when_bot_added(session, bot: Bot, chat_id: int):
 	admins = await bot.get_chat_administrators(chat_id)
