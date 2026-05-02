@@ -4,6 +4,8 @@ from bot.db import get_session
 from bot.db.crud_members import get_member_by_username
 from bot.db.crud_settings import get_settings, upsert_settings, delete_settings
 
+from datetime import datetime, timedelta
+
 async def is_admin(bot: Bot, chat_id: int, user_id: int) -> bool:
 	member = await bot.get_chat_member(
 		chat_id=chat_id,
@@ -100,3 +102,33 @@ async def chat_settings_switch(message: Message, bot: Bot, chat_arg: str):
 			chat_dict[setting] = False
 		await upsert_settings(session, message.chat.id, chat_dict)
 	await message.reply(f"✅ Настройка {args[0]} переключена")
+
+async def get_id_and_name(session, bot: Bot, message: Message, args: list):
+	if message.reply_to_message:
+		user = message.reply_to_message.from_user
+		user_id = user.id
+		name = f"@{user.username}" if user.username else user.full_name
+		return user_id, name
+
+	if len(args) < 2:
+		return None, "Отсутствует пользователь"
+
+	user_id = await get_id(session, message.chat.id, args[1])
+	if isinstance(user_id, str):
+		return None, user_id
+
+	member = await bot.get_chat_member(message.chat.id, user_id)
+	if not member:
+		return None, "❌ Юзер не в чате"
+
+	name = f"@{member.user.username}" if member.user.username \
+									  else member.full_name
+	return user_id, name
+
+def get_end_time(args: list) -> datetime:
+	if len(args) >= 2 and args[-1].isdigit():
+		duration = int(args[-1])
+		if duration <= 0:
+			return None
+		return datetime.utcnow() + timedelta(seconds=duration)
+	return datetime.max

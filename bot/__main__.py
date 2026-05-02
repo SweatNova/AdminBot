@@ -5,6 +5,7 @@ from aiogram import Bot, Dispatcher
 from bot.config_reader import get_config, BotConfig
 from bot.handlers import get_routers
 from bot.db import init_db
+from bot.utils.scheduler import punishments_worker
 
 dp = Dispatcher()
 
@@ -14,6 +15,7 @@ async def main():
 	await init_db()
 	for router in get_routers():
 		dp.include_router(router)
+	asyncio.create_task(punishments_worker(bot))
 	await dp.start_polling(bot)
 
 if __name__ == "__main__":

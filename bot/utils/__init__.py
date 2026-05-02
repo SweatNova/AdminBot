@@ -4,5 +4,7 @@ from .some_func import (
 	extract_admin_permissions, 
 	extract_user_permissions,
 	get_id,
-	chat_settings_switch
+	chat_settings_switch,
+	get_id_and_name,
+	get_end_time
 )
