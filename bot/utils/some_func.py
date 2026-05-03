@@ -1,7 +1,10 @@
 from aiogram.types import Message, User
 from aiogram import Bot
+from aiogram.exceptions import TelegramBadRequest
+from aiogram.types import ChatPermissions
+
 from bot.db import get_session
-from bot.db.crud_members import get_member_by_username
+from bot.db.crud_members import get_member_by_username, upsert_punishments
 from bot.db.crud_settings import get_settings, upsert_settings, delete_settings
 
 from datetime import datetime, timedelta
@@ -85,7 +88,7 @@ async def get_id(session, chat_id, target):
 	return "❌ Некорректный формат"
 
 async def chat_settings_switch(message: Message, bot: Bot, chat_arg: str):
-	args = message.text.lower().split(maxsplit=1)
+	args = message.text.lower().split()
 	if len(args) != 2:
 		return await message.reply("Выберите режим on/off")
 	if not args[1] in ["on", "off"]:
@@ -132,3 +135,78 @@ def get_end_time(args: list) -> datetime:
 			return None
 		return datetime.utcnow() + timedelta(seconds=duration)
 	return datetime.max
+
+async def apply_punishments(session, bot, message, user_id, username,
+							command: str, end_time):
+	try:
+		chat_id = message.chat.id
+		if await is_admin(bot, chat_id, user_id):
+			return "❌ Нельзя ограничивать админов"
+		if message.text.startswith(("/dban", "/dmute", "/dkick")) and \
+		   message.reply_to_message:
+			await bot.delete_message(chat_id,
+									 message.reply_to_message.message_id)
+		if message.text.startswith(("/sban", "/smute", "/skick")):
+			await message.delete()
+
+		if "ban" in command:
+			await bot.ban_chat_member(chat_id, user_id)
+			action = "забанен"
+		elif "mute" in command:
+			await bot.restrict_chat_member(
+				chat_id=chat_id,
+				user_id=user_id,
+				permissions=ChatPermissions(
+					can_send_messages=False
+				)
+			)
+			action = "замучен"
+		elif "kick" in command:
+			await bot.ban_chat_member(chat_id, user_id)
+			await bot.unban_chat_member(chat_id, user_id)
+			action = "кикнут"
+		
+		status = "banned" if "ban" in command else "muted"
+
+		if not "kick" in command:
+			await upsert_punishments(
+				session,
+				chat_id,
+				user_id,
+				status,
+				message.from_user.username,
+				datetime.utcnow(),
+				end_time
+			)
+		return f"Пользователь {username} был {action}"
+	except TelegramBadRequest as e:
+		return f"❌ Ошибка telegram: {e}"
+
+async def remove_punishments(session, bot, message, user_id, username,
+							 command: str):
+	try:
+		chat_id = message.chat.id
+		if await is_admin(bot, chat_id, user_id):
+			return "❌ Нельзя убирать ограничения админов"
+
+		if command == "/unban":
+			await bot.unban_chat_member(chat_id, user_id)
+			action = "разбанен"
+		elif command == "/unmute":
+			await bot.restrict_chat_member(
+				chat_id=chat_id,
+				user_id=user_id,
+				permissions=ChatPermissions(
+					can_send_messages=True,
+				)
+			)
+			action = "размучен"
+		await upsert_punishments(
+			session,
+			chat_id,
+			user_id,
+			None, None, None, None
+		)
+		return f"Пользователь {username} был {action}"
+	except TelegramBadRequest as e:
+		return f"❌ Ошибка telegram: {e}"

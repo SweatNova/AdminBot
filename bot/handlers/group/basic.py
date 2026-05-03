@@ -9,8 +9,38 @@ from bot.db.crud_settings import upsert_settings, get_settings
 
 from bot.keyboards.basic_keyboards import all_help, back_button
 
+from aiogram.types import BotCommand
+
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
+
+async def set_commands(bot: Bot):
+    commands = [
+        BotCommand(command="start", description="Ознакомительное сообщения"),
+        BotCommand(command="help", description="Справка по всем командам"),
+		BotCommand(command="info", description="Информация о боте"),
+		BotCommand(command="privacy", description="Coming soon"),
+
+		BotCommand(command="promote", description="Повысить до админа"),
+        BotCommand(command="demote", description="Понизить до юзера"),
+        BotCommand(command="adminlist", description="Вывод списка админов"),
+        BotCommand(command="anonadmin", description="Переключить настройку"),
+        BotCommand(command="adminerror", description="Переключить настройку"),
+
+		BotCommand(command="kickme", description="Самокик"),
+        BotCommand(command="ban", description="Бан"),
+        BotCommand(command="dban", description="Бан с удалением сообщения"),
+        BotCommand(command="sban", description="Скрытый бан"),
+		BotCommand(command="unban", description="Разбан"),
+        BotCommand(command="mute", description="Мут"),
+        BotCommand(command="dmute", description="Мут с удалением сообщения"),
+        BotCommand(command="smute", description="Скрытый мут"),
+        BotCommand(command="unmute", description="Размут"),
+        BotCommand(command="kick", description="Кик"),
+        BotCommand(command="dkick", description="Кик с удалением сообщения"),
+        BotCommand(command="skick", description="Скрытый кик"),
+    ]
+    await bot.set_my_commands(commands)
 
 @router.message(Command("start"))
 async def start(message: Message):
@@ -109,6 +139,6 @@ async def info(message: Message):
         "Автор: @F3m_b0y\n"
         "Лицензия: MIT\n"
         "Описание: Этот бот помогает администрировать вашу группу.\n"
-        "Версия: 0.4.7"
+        "Версия: 0.4.8"
 	)
 

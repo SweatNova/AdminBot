@@ -6,5 +6,7 @@ from .some_func import (
 	get_id,
 	chat_settings_switch,
 	get_id_and_name,
-	get_end_time
+	get_end_time,
+	apply_punishments,
+	remove_punishments
 )
