@@ -11,3 +11,4 @@ version's list:
 0.4.7 - all commands except kick have been added to bans. temporary restrictions have also been implemented, and a scheduler has been added.
 0.4.7.1 - remake setting.toml (lol)
 stop tracking settings.toml - update .gitignore
+0.4.8 - completion of all ban-related commands, improvement of the code structure, and addition of command display when typing /
