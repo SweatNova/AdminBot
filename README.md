@@ -12,3 +12,4 @@ version's list:
 0.4.7.1 - remake setting.toml (lol)
 stop tracking settings.toml - update .gitignore
 0.4.8 - completion of all ban-related commands, improvement of the code structure, and addition of command display when typing /
+0.4.8.1 - preparing for Redis integration and upgrade to version 0.5
