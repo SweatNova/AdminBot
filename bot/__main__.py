@@ -2,10 +2,15 @@ import asyncio
 import logging
 import sys
 from aiogram import Bot, Dispatcher
+
 from bot.config_reader import get_config, BotConfig
+
 from bot.handlers import get_routers
-from bot.db import init_db
+
+from bot.storages.postgre import init_db
+
 from bot.utils.scheduler import punishments_worker
+
 from bot.handlers.group.basic import set_commands
 
 dp = Dispatcher()

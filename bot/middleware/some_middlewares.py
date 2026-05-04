@@ -3,8 +3,11 @@ from aiogram.types import Message
 from typing import Callable, Any, Awaitable
 
 from bot.utils import is_admin
-from bot.db import get_session
-from bot.db.crud_settings import upsert_settings, get_settings
+from bot.storages.postgre import (
+	get_session,
+	upsert_settings,
+	get_settings
+)
 
 class AdminMiddleware(BaseMiddleware):
 	async def __call__(

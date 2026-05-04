@@ -3,9 +3,14 @@ from aiogram import Bot
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import ChatPermissions
 
-from bot.db import get_session
-from bot.db.crud_members import get_member_by_username, upsert_punishments
-from bot.db.crud_settings import get_settings, upsert_settings, delete_settings
+from bot.storages.postgre import (
+	get_session,
+	get_member_by_username,
+	update_punishments,
+	get_settings,
+	upsert_settings,
+	delete_settings
+)
 
 from datetime import datetime, timedelta
 
@@ -114,7 +119,7 @@ async def get_id_and_name(session, bot: Bot, message: Message, args: list):
 		return user_id, name
 
 	if len(args) < 2:
-		return None, "Отсутствует пользователь"
+		return None, "❌ Отсутствует пользователь"
 
 	user_id = await get_id(session, message.chat.id, args[1])
 	if isinstance(user_id, str):
@@ -149,6 +154,19 @@ async def apply_punishments(session, bot, message, user_id, username,
 		if message.text.startswith(("/sban", "/smute", "/skick")):
 			await message.delete()
 
+		status = "banned" if "ban" in command else "muted"
+
+		if not "kick" in command:
+			await update_punishments(
+				session,
+				chat_id,
+				user_id,
+				status,
+				message.from_user.username,
+				datetime.utcnow(),
+				end_time
+			)		
+
 		if "ban" in command:
 			await bot.ban_chat_member(chat_id, user_id)
 			action = "забанен"
@@ -166,18 +184,6 @@ async def apply_punishments(session, bot, message, user_id, username,
 			await bot.unban_chat_member(chat_id, user_id)
 			action = "кикнут"
 		
-		status = "banned" if "ban" in command else "muted"
-
-		if not "kick" in command:
-			await upsert_punishments(
-				session,
-				chat_id,
-				user_id,
-				status,
-				message.from_user.username,
-				datetime.utcnow(),
-				end_time
-			)
 		return f"Пользователь {username} был {action}"
 	except TelegramBadRequest as e:
 		return f"❌ Ошибка telegram: {e}"
@@ -187,7 +193,14 @@ async def remove_punishments(session, bot, message, user_id, username,
 	try:
 		chat_id = message.chat.id
 		if await is_admin(bot, chat_id, user_id):
-			return "❌ Нельзя убирать ограничения админов"
+			return "❌ Команда бессмыслена для админов"
+
+		await update_punishments(
+			session,
+			chat_id,
+			user_id,
+			None, None, None, None
+		)
 
 		if command == "/unban":
 			await bot.unban_chat_member(chat_id, user_id)
@@ -201,12 +214,53 @@ async def remove_punishments(session, bot, message, user_id, username,
 				)
 			)
 			action = "размучен"
-		await upsert_punishments(
-			session,
-			chat_id,
-			user_id,
-			None, None, None, None
-		)
 		return f"Пользователь {username} был {action}"
 	except TelegramBadRequest as e:
 		return f"❌ Ошибка telegram: {e}"
+
+async def change_role(bot: Bot, session, chat_id: int,
+					  command: str, target: str):
+	RIGHTS_ADMIN = {
+		"can_change_info": True,
+		"can_delete_messages": True,
+		"can_invite_users": True,
+		"can_restrict_members": True,
+		"can_pin_messages": True,
+		"can_promote_members": False
+	}
+	RIGHTS_MEMBER = {
+		"can_change_info": False,
+		"can_delete_messages": False,
+		"can_invite_users": False,
+		"can_restrict_members": False,
+		"can_pin_messages": False,
+		"can_promote_members": False
+	}
+
+	user_id = await get_id(session, chat_id, target)
+	if isinstance(user_id, str):
+		return user_id
+	
+	try:
+		target_member = await bot.get_chat_member(chat_id, user_id)
+		if target_member.user.is_bot:
+			return "❌ Нельзя менять права у ботов"
+	except TelegramBadRequest as e:
+		if "PARTICIPANT_ID_INVALID" in str(e):
+			return "некорректный айди пользователя"
+
+	rights = RIGHTS_ADMIN if command == "/promote" else RIGHTS_MEMBER
+	role = "admin" if command == "/promote" else "user"
+	action = "повышен" if command == "/promote" else "понижен"
+	try:
+		await bot.promote_chat_member(
+			chat_id=chat_id,
+			user_id=user_id,
+			**rights
+		)
+		return f"✅ Пользователь {action} до {role}"
+	except TelegramBadRequest as e:
+		if "CHAT_ADMIN_REQUIRED" in str(e):
+			return f"❌ Админ был назначен не ботом"
+		else:
+			return f"❌ Ошибка telegram: {e}"

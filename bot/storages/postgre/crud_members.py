@@ -17,12 +17,12 @@ async def upsert_member(session: AsyncSession, chat_id: int, user_id: int,
 		member.user_permissions = user_permissions
 		member.admin_permissions = admin_permissions
 	else:
-		await update_member(session, chat_id, user_id, username, role,
+		await create_member(session, chat_id, user_id, username, role,
 							user_permissions, admin_permissions,
 							None, None, None, None)
 	return member
 
-async def update_member(session: AsyncSession, chat_id: int, user_id: int,
+async def create_member(session: AsyncSession, chat_id: int, user_id: int,
 						username: str | None = None, role: str | None = None,
 						user_permissions: dict | None = None,
 						admin_permissions: dict | None = None,
@@ -44,7 +44,7 @@ async def update_member(session: AsyncSession, chat_id: int, user_id: int,
 	)
 	session.add(member)
 
-async def upsert_punishments(session: AsyncSession, chat_id: int, user_id: int,
+async def update_punishments(session: AsyncSession, chat_id: int, user_id: int,
 							 restricted_status: str | None = None,
 							 admin_who_restricted: str | None = None,
 							 start_time: TIMESTAMP | None = None,

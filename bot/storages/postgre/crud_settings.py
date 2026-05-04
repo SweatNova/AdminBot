@@ -11,10 +11,10 @@ async def upsert_settings(session: AsyncSession, chat_id: int,
 	if chat_settings:
 		chat_settings.admin = admin
 	else:
-		await update_settings(session, chat_id, admin)
+		await create_settings(session, chat_id, admin)
 	return chat_settings
 
-async def update_settings(session: AsyncSession, chat_id: int,
+async def create_settings(session: AsyncSession, chat_id: int,
 						  admin: dict | None) -> None:
 	chat_settings = ChatSettings(
 		chat_id=chat_id,

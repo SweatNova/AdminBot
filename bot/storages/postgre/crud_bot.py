@@ -15,11 +15,11 @@ async def upsert_bot(session: AsyncSession, chat_id: int, chat_type: str,
 		bot.bot_user_permissions = bot_user_permissions
 		bot.bot_admin_permissions = bot_admin_permissions
 	else:
-		await update_bot(session, chat_id, chat_type, chat_username, bot_role,
+		await create_bot(session, chat_id, chat_type, chat_username, bot_role,
 						 bot_user_permissions, bot_admin_permissions)
 	return bot
 
-async def update_bot(session: AsyncSession, chat_id: int, chat_type: str,
+async def create_bot(session: AsyncSession, chat_id: int, chat_type: str,
 					 chat_username: str | None, bot_role: str,
 					 bot_user_permissions: dict | None,
 					 bot_admin_permissions: dict | None) -> None:

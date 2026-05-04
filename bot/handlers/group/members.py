@@ -1,13 +1,17 @@
 from aiogram import Router, Bot
 from aiogram.types import ChatMemberUpdated
-
 from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
 
-from bot.db import get_session
-from bot.db.crud_members import upsert_member, upsert_punishments
-from bot.db.crud_bot import upsert_bot
-from bot.db.crud_settings import get_settings, upsert_settings
+from bot.storages.postgre import (
+	get_session,
+	upsert_member,
+	update_punishments,
+	upsert_bot,
+	get_settings,
+	upsert_settings
+)
+
 from bot.utils import (
 	status_to_db,
 	extract_admin_permissions,
@@ -40,7 +44,7 @@ async def members_update(event: ChatMemberUpdated):
 							role, user_permissions, admin_permissions)
 		if old_status in ("left", "kicked") and \
 		   new_status in ("member", "administrator", "creator"):
-			await upsert_punishments(session, chat_id, user_id,
+			await update_punishments(session, chat_id, user_id,
 									 None, None, None, None)
 
 async def when_bot_added(session, bot: Bot, chat_id: int):

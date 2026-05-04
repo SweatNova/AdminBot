@@ -4,7 +4,7 @@ from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
 from aiogram.exceptions import TelegramBadRequest
 
-from bot.db import get_session
+from bot.storages.postgre import get_session
 from bot.utils import (
 	is_admin,
 	get_id_and_name,

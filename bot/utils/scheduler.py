@@ -1,8 +1,11 @@
 import asyncio
 from datetime import datetime
 
-from bot.db import get_session
-from bot.db.crud_members import get_punishments, upsert_punishments
+from bot.storages.postgre import (
+	get_session,
+	get_punishments,
+	update_punishments
+)
 
 async def punishments_worker(bot):
     while True:
@@ -26,4 +29,4 @@ async def punishments_worker(bot):
 											 None, None)
                 except Exception as e:
                     print(f"Ошибка при снятии наказания: {e}")
-        await asyncio.sleep(5)
+        await asyncio.sleep(30)

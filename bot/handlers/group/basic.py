@@ -4,9 +4,6 @@ from aiogram.filters import Command
 from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
 
-from bot.db import get_session
-from bot.db.crud_settings import upsert_settings, get_settings
-
 from bot.keyboards.basic_keyboards import all_help, back_button
 
 from aiogram.types import BotCommand
