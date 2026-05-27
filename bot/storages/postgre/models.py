@@ -28,10 +28,12 @@ class Member(Base):
 		default=dict,
 		server_default="{}"
 	)
-	restricted_status: Mapped[str] = mapped_column(String(32), index=True)
-	admin_who_restricted: Mapped[str] = mapped_column(String(64), index=True)
-	start_time: Mapped[datetime] = mapped_column(TIMESTAMP, index=True)
-	end_time: Mapped[datetime] = mapped_column(TIMESTAMP, index=True)
+	restricted_status: Mapped[str | None] = \
+									mapped_column(String(32), index=True)
+	admin_who_restricted: Mapped[str | None] = \
+									mapped_column(String(64), index=True)
+	start_time: Mapped[datetime | None] = mapped_column(TIMESTAMP, index=True)
+	end_time: Mapped[datetime | None] = mapped_column(TIMESTAMP, index=True)
 
 class BotChatInfo(Base):
 	__tablename__ = "bot_chats_info"

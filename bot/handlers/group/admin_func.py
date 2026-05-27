@@ -1,53 +1,67 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.types import Message
+from aiogram.filters import Command
+
 from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
-from aiogram.exceptions import TelegramBadRequest
 
-from bot.storages.postgre import get_session
-from bot.utils import (
-	extract_admin_permissions,
-	get_id,
-	chat_settings_switch,
-	change_role
-)
 from bot.middleware import AdminMiddleware
+
+from bot.services.services_container import ServicesContainer
 
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
 router.message.middleware(AdminMiddleware())
 
-@router.message(F.text.startswith(("/promote", "/demote")))
-async def promote_demote_user(message: Message, bot: Bot):
+@router.message(Command("promote", "demote"))
+async def promote_demote(message: Message, services: ServicesContainer):
 	args = message.text.split()
-	if len(args) < 2:
-		return await message.reply("Введите айди или юзернейм")
 	if len(args) > 2:
-		return await message.reply("Не должно быть никаких аргументов "
-								   "кроме юзернейма")
-
-	async with get_session() as session:
-		result = await change_role(
-			bot=bot,
-			session=session,
-			chat_id=message.chat.id,
-			command=args[0],
-			target=args[1]
+		return await message.reply(
+			"❌ Не должно быть никаких аргументов кроме юзернейма или айди"
 		)
+
+	user_id, username = await services.utils_service.get_id_and_name(
+		message,
+		args
+	)
+	if user_id is None:
+		return await message.reply(username)
+	
+	is_promote = message.text.startswith("/promote")
+	result = await services.admin_service.change_admin_role(
+		message.chat.id,
+		user_id,
+		username,
+		is_promote
+	)
 	await message.reply(result)
 
-@router.message(F.text == "/adminlist")
-async def admin_list(message: Message, bot: Bot):
-	admins = await bot.get_chat_administrators(message.chat.id)
+@router.message(Command("adminlist"))
+async def adminlist(message: Message, services: ServicesContainer):
+	try:
+		admins = await services.admin_service.get_chat_administrators(
+			message.chat.id
+		)
+	except Exception as e:
+		return await message.reply(e)
+
 	text = "\n".join(
 		f"{a.status} | {a.user.id} | @{a.user.username or 'no_username'}"
 		for a in admins
 	)
 	await message.reply("✅ Вот весь список админов чата: \n" + text)
 
-@router.message(F.text.startswith("/anonadmin"))
-async def anon_admin(message: Message, bot: Bot):
-	await chat_settings_switch(message, bot, "admin")
-@router.message(F.text.startswith("/adminerror"))
-async def admin_error(message: Message, bot: Bot):
-	await chat_settings_switch(message, bot, "admin")
+@router.message(Command("anonadmin", "adminerror"))
+async def anonadmin_adminerror(message: Message, services: ServicesContainer):
+	args = message.text.split()
+	if len(args) < 2:
+		return await message.reply("❌ Введите новое значение настройки")
+	if len(args) > 2:
+		return await message.reply("❌ Слишком много аргументов")
+
+	result = await services.admin_service.chat_settings_switch(
+		message.chat.id,
+		args
+	)
+	await message.reply(result)

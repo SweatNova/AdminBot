@@ -1,1 +1,1 @@
-from .some_middlewares import AdminMiddleware
+from .admin_middleware import AdminMiddleware

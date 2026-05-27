@@ -2,12 +2,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import Message
 from typing import Callable, Any, Awaitable
 
-from bot.utils import is_admin
-from bot.storages.postgre import (
-	get_session,
-	upsert_settings,
-	get_settings
-)
+from bot.services.services_container import ServicesContainer
 
 class AdminMiddleware(BaseMiddleware):
 	async def __call__(
@@ -16,24 +11,31 @@ class AdminMiddleware(BaseMiddleware):
 		event: Message,
 		data: dict[str, Any]
 	) -> Any:
+		services: ServicesContainer = data["services"]
 		handler_object = data.get("handler")
 		flags = getattr(handler_object, "flags", {})
 		if flags.get("skip_admin"):
 			return await handler(event, data)
 
-		async with get_session() as session:
-			chat_id = event.chat.id
-			chat_settings = await get_settings(session, event.chat.id)
-			adminerror = chat_settings.admin["adminerror"]
-			
-		if not await is_admin(data["bot"], event.chat.id, event.from_user.id):
+		chat_id = event.chat.id
+		user_id = event.from_user.id
+
+		chat_settings = await services.chats_settings_service.get_settings(
+			chat_id
+		)
+		adminerror = chat_settings.admin["adminerror"]
+
+		if not await services.telegram_service.is_admin(chat_id, user_id):
 			if adminerror:
 				await event.reply("❌ У вас недостаточно прав")
 				return
 			return
-		bot = data["bot"]
-		_bot_ = await bot.get_chat_member(event.chat.id, bot.id)
-		if _bot_.status not in ("administrator", "creator"):
+
+		bot = await services.telegram_service.get_chat_member(
+			chat_id,
+			data["bot"].id
+		)
+		if bot.status not in ("administrator", "creator"):
 			if adminerror:
 				await event.reply("❌ У бота нет прав администратора")
 				return

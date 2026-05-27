@@ -1,76 +1,160 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.types import Message
+from aiogram.filters import Command
+
 from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
-from aiogram.exceptions import TelegramBadRequest
 
-from bot.storages.postgre import get_session
-from bot.utils import (
-	is_admin,
-	get_id_and_name,
-	get_end_time,
-	apply_punishments,
-	remove_punishments	
-)
 from bot.middleware import AdminMiddleware
 
-from datetime import datetime
+from bot.services.services_container import ServicesContainer
 
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
 router.message.middleware(AdminMiddleware())
 
-@router.message(F.text == "/kickme", flags={"skip_admin": True})
-async def kickme(message: Message, bot: Bot):
+@router.message(Command("ban", "dban", "sban"))
+async def ban(message: Message, services: ServicesContainer):
+	args = message.text.split()
+	if len(args) > 3:
+		return await message.reply("❌ Слишком много аргументов")
+
+	user_id, username = await services.utils_service.get_id_and_name(
+		message,
+		args
+	)
+	if user_id is None:
+		return await message.reply(username)
+
+	delete = message.text.startswith("/dban")
+	secret = message.text.startswith("/sban")
+	until_time = services.utils_service.get_end_time(args)
+	if until_time is None:
+		return await message.reply("❌ Некорректный временной аргумент")
+
+	result = await services.bans_service.ban(
+		message.chat.id,
+		user_id,
+		username,
+		message,
+		delete,
+		secret,
+		until_time
+	)
+	if not secret:
+		await message.reply(result)
+
+@router.message(Command("unban"))
+async def unban(message: Message, services: ServicesContainer):
+	args = message.text.split()
+	if len(args) > 2:
+		return await message.reply("❌ Слишком много аргументов")
+
+	user_id, username = await services.utils_service.get_id_and_name(
+		message,
+		args
+	)
+	if user_id is None:
+		return await message.reply(username)
+
+	result = await services.bans_service.unban(
+		message.chat.id,
+		user_id,
+		username
+	)
+	await message.reply(result)
+
+@router.message(Command("mute", "dmute", "smute"))
+async def mute(message: Message, services: ServicesContainer):
+	args = message.text.split()
+	if len(args) > 3:
+		return await message.reply("❌ Слишком много аргументов")
+
+	user_id, username = await services.utils_service.get_id_and_name(
+		message,
+		args
+	)
+	if user_id is None:
+		return await message.reply(username)
+
+	delete = message.text.startswith("/dmute")
+	secret = message.text.startswith("/smute")
+	until_time = services.utils_service.get_end_time(args)
+	if until_time is None:
+		return await message.repl("❌ Некорректный временной аргумент")
+
+	result = await services.bans_service.mute(
+		message.chat.id,
+		user_id,
+		username,
+		message,
+		delete,
+		secret,
+		until_time,
+	)
+	if not secret:
+		await message.reply(result)
+
+@router.message(Command("unmute"))
+async def unmute(message: Message, services: ServicesContainer):
+	args = message.text.split()
+	if len(args) > 2:
+		return await message.reply("❌ Слишком много аргументов")
+
+	user_id, username = await services.utils_service.get_id_and_name(
+		message,
+		args
+	)
+	if user_id is None:
+		return await message.reply(username)
+
+	result = await services.bans_service.unmute(
+		message.chat.id,
+		user_id,
+		username
+	)
+	await message.reply(result)
+
+@router.message(Command("kick", "dkick", "skick"))
+async def kick(message: Message, services: ServicesContainer):
+	args = message.text.split()
+	if len(args) > 2:
+		return await message.reply("❌ Слишком много аргументов")
+
+	user_id, username = await services.utils_service.get_id_and_name(
+		message,
+		args
+	)
+	if user_id is None:
+		return await message.reply(username)
+
+	delete = message.text.startswith("/dkick")
+	secret = message.text.startswith("/skick")
+
+	result = await services.bans_service.kick(
+		message.chat.id,
+		user_id,
+		username,
+		message,
+		delete,
+		secret,
+	)
+	if not secret:
+		await message.reply(result)
+
+@router.message(Command("kickme"), flags={"skip_admin": True})
+async def kickme(message: Message, services: ServicesContainer):
 	args = message.text.split()
 	if len(args) > 1:
-		return await message.reply("Команда не требует аргументов")
-	if await is_admin(bot, message.chat.id, message.from_user.id):
-		return await message.reply("Вы админ! лишите себя прав "
-								   "для вызова команды")
-	await bot.ban_chat_member(message.chat.id, message.from_user.id)
-	await bot.unban_chat_member(message.chat.id, message.from_user.id)	
-	await message.reply(f"Пользователь @{message.from_user.username} "
-						"самовыпилился из чата")
+		return await message.reply("❌ Команда не требует аргументов")
 
-@router.message(F.text.startswith((
-    "/ban", "/dban", "/sban",
-    "/mute", "/dmute", "/smute",
-    "/kick", "/dkick", "/skick"
-)))
-async def ban_mute_kick(message: Message, bot: Bot):
-	args = message.text.split()
-	async with get_session() as session:
-		user_id, username = await get_id_and_name(session, bot, message, args)
-		if user_id is None:
-			return await message.reply(username)
+	user_id = message.from_user.id
+	username = f"@{message.from_user.username}" if message.from_user.username \
+												else message.from_user.full_name
 
-		result = await apply_punishments(
-			session,
-			bot,
-			message,
-			user_id,
-			username,
-			command=args[0],
-			end_time=get_end_time(args)
-		)
-		if not args[0] in ("/sban", "/smute", "/skick"):
-			await message.reply(result)
-
-@router.message(F.text.startswith(("/unban", "/unmute")))
-async def unban_unmute(message: Message, bot: Bot):
-	args = message.text.split()
-	async with get_session() as session:
-		user_id, username = await get_id_and_name(session, bot, message, args)
-		if user_id is None:
-			return await message.reply(username)
-
-		result = await remove_punishments(
-			session,
-			bot,
-			message,
-			user_id,
-			username,
-			command=args[0]
-		)
+	result = await services.bans_service.kickme(
+		message.chat.id,
+		user_id,
+		username
+	)
 	await message.reply(result)
