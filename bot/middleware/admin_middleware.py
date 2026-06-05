@@ -7,12 +7,7 @@ from bot.services.services_container import ServicesContainer
 from bot.exceptions import UserHasNoRightsError, AdminBotHasNoRightsError
 
 class AdminMiddleware(BaseMiddleware):
-	async def __call__(
-		self,
-		handler: Callable[[Message, dict[str, Any]], Awaitable[Any]],
-		event: Message,
-		data: dict[str, Any]
-	) -> Any:
+	async def __call__(self, handler, event, data):
 		services: ServicesContainer = data["services"]
 		handler_object = data.get("handler")
 		flags = getattr(handler_object, "flags", {})

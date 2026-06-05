@@ -2,6 +2,8 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 
+from bot.middleware import UserSyncMiddleware
+
 from bot.logger import setup_logger
 
 from bot.config_reader import get_config, BotConfig
@@ -17,6 +19,7 @@ from bot.handlers.group.basic import set_commands
 from bot.scheduler import Scheduler
 
 dp = Dispatcher()
+dp.update.middleware(UserSyncMiddleware())
 
 async def main():
 	bot_config = get_config(model=BotConfig, root_key="bot")

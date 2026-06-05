@@ -1765,3 +1765,317 @@ NameError: name 'BotHasNoRightsError' is not defined. Did you mean: 'AdminBotHas
 2026-06-05 14:16:52,890 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
 2026-06-05 14:16:52,891 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
 2026-06-05 14:16:52,891 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 14:31:17,053 | INFO | aiogram.dispatcher | start_polling:596 | Start polling
+2026-06-05 14:31:17,160 | INFO | aiogram.dispatcher | _polling:378 | Run polling for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 14:31:44,021 | INFO | aiogram.event | feed_update:178 | Update id=487127960 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 14:31:44,443 | INFO | aiogram.event | feed_update:178 | Update id=487127959 is handled. Duration 628 ms by bot id=8710131904
+2026-06-05 14:32:18,300 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -5112634111 AdminBot doesn't have enough rights
+2026-06-05 14:32:18,412 | INFO | aiogram.event | feed_update:178 | Update id=487127961 is handled. Duration 113 ms by bot id=8710131904
+2026-06-05 14:32:32,867 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -5112634111 AdminBot doesn't have enough rights
+2026-06-05 14:32:33,069 | INFO | aiogram.event | feed_update:178 | Update id=487127962 is handled. Duration 203 ms by bot id=8710131904
+2026-06-05 14:32:39,921 | INFO | aiogram.event | feed_update:178 | Update id=487127964 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 14:32:39,921 | INFO | aiogram.event | feed_update:178 | Update id=487127965 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 14:32:39,962 | INFO | aiogram.event | feed_update:178 | Update id=487127963 is handled. Duration 133 ms by bot id=8710131904
+2026-06-05 14:32:40,194 | INFO | aiogram.event | feed_update:178 | Update id=487127966 is handled. Duration 4 ms by bot id=8710131904
+2026-06-05 14:32:49,956 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003955167708 user 8075767034 write unknown user asdsdasdas23
+2026-06-05 14:32:50,083 | INFO | aiogram.event | feed_update:178 | Update id=487127967 is handled. Duration 129 ms by bot id=8710131904
+2026-06-05 14:33:21,532 | INFO | aiogram.event | feed_update:178 | Update id=487127968 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 14:33:30,525 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 38, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 33, in ban
+    result = await services.bans_service.ban(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 45, in ban
+    if member.role in ("creator", "admin"):
+       ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'role'
+2026-06-05 14:33:30,720 | INFO | aiogram.event | feed_update:178 | Update id=487127969 is handled. Duration 197 ms by bot id=8710131904
+2026-06-05 14:37:11,076 | INFO | aiogram.event | feed_update:178 | Update id=487127970 is handled. Duration 6 ms by bot id=8710131904
+2026-06-05 14:37:26,347 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003955167708 user 8075767034 tried to ban admin 8421643331
+2026-06-05 14:37:26,549 | INFO | aiogram.event | feed_update:178 | Update id=487127971 is handled. Duration 400 ms by bot id=8710131904
+2026-06-05 14:37:34,443 | INFO | aiogram.event | feed_update:178 | Update id=487127972 is handled. Duration 6 ms by bot id=8710131904
+2026-06-05 14:37:39,870 | INFO | aiogram.event | feed_update:178 | Update id=487127974 is handled. Duration 7 ms by bot id=8710131904
+2026-06-05 14:37:39,890 | INFO | bot.handlers.group.bans_func | ban:43 | in chat -1003955167708 user 8421643331 was banned by admin 8075767034
+2026-06-05 14:37:40,068 | INFO | aiogram.event | feed_update:178 | Update id=487127975 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 14:37:40,068 | INFO | aiogram.event | feed_update:178 | Update id=487127973 is handled. Duration 614 ms by bot id=8710131904
+2026-06-05 18:21:11,219 | INFO | aiogram.event | feed_update:178 | Update id=487127976 is handled. Duration 3557 ms by bot id=8710131904
+2026-06-05 18:21:14,745 | INFO | aiogram.event | feed_update:178 | Update id=487127977 is handled. Duration 201 ms by bot id=8710131904
+2026-06-05 18:21:20,002 | INFO | aiogram.event | feed_update:178 | Update id=487127978 is handled. Duration 135 ms by bot id=8710131904
+2026-06-05 18:27:09,370 | INFO | bot.handlers.group.admin_func | anonadmin_adminerror:75 | in chat -1003955167708 admin 8075767034 switched setting adminerror to on
+2026-06-05 18:27:09,567 | INFO | aiogram.event | feed_update:178 | Update id=487127979 is handled. Duration 207 ms by bot id=8710131904
+2026-06-05 18:27:14,281 | INFO | bot.handlers.group.admin_func | anonadmin_adminerror:75 | in chat -1003955167708 admin 8075767034 switched setting adminerror to off
+2026-06-05 18:27:14,482 | INFO | aiogram.event | feed_update:178 | Update id=487127980 is handled. Duration 207 ms by bot id=8710131904
+2026-06-05 18:27:31,609 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003955167708 user 8075767034 write invalid setting mode
+2026-06-05 18:27:31,728 | INFO | aiogram.event | feed_update:178 | Update id=487127981 is handled. Duration 119 ms by bot id=8710131904
+2026-06-05 18:27:37,897 | INFO | bot.handlers.group.admin_func | anonadmin_adminerror:75 | in chat -1003955167708 admin 8075767034 switched setting adminerror to on
+2026-06-05 18:27:38,019 | INFO | aiogram.event | feed_update:178 | Update id=487127982 is handled. Duration 127 ms by bot id=8710131904
+2026-06-05 18:27:47,228 | INFO | bot.handlers.group.admin_func | anonadmin_adminerror:75 | in chat -1003955167708 admin 8075767034 switched setting anonadmin to on
+2026-06-05 18:27:47,359 | INFO | aiogram.event | feed_update:178 | Update id=487127983 is handled. Duration 139 ms by bot id=8710131904
+2026-06-05 18:27:55,143 | INFO | bot.handlers.group.admin_func | anonadmin_adminerror:75 | in chat -1003538569618 admin 8075767034 switched setting anonadmin to on
+2026-06-05 18:27:55,339 | INFO | aiogram.event | feed_update:178 | Update id=487127984 is handled. Duration 204 ms by bot id=8710131904
+2026-06-05 18:52:37,919 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
+2026-06-05 18:52:37,919 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 18:52:37,919 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 18:53:34,821 | INFO | aiogram.dispatcher | start_polling:596 | Start polling
+2026-06-05 18:53:34,918 | INFO | aiogram.dispatcher | _polling:378 | Run polling for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 18:53:46,632 | INFO | aiogram.event | feed_update:178 | Update id=487127985 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 18:53:46,632 | ERROR | aiogram.event | _process_update:325 | Cause exception while process update id=487127985 by bot id=8710131904
+AttributeError: 'Update' object has no attribute 'chat'
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/user_sync_middleware.py", line 9, in __call__
+    chat_id = event.chat.id
+              ^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/pydantic/main.py", line 1026, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Update' object has no attribute 'chat'
+2026-06-05 18:53:46,837 | INFO | aiogram.event | feed_update:178 | Update id=487127986 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 18:53:46,837 | ERROR | aiogram.event | _process_update:325 | Cause exception while process update id=487127986 by bot id=8710131904
+AttributeError: 'Update' object has no attribute 'chat'
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/user_sync_middleware.py", line 9, in __call__
+    chat_id = event.chat.id
+              ^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/pydantic/main.py", line 1026, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Update' object has no attribute 'chat'
+2026-06-05 18:53:51,036 | INFO | aiogram.event | feed_update:178 | Update id=487127987 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 18:53:51,036 | ERROR | aiogram.event | _process_update:325 | Cause exception while process update id=487127987 by bot id=8710131904
+AttributeError: 'Update' object has no attribute 'chat'
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/user_sync_middleware.py", line 9, in __call__
+    chat_id = event.chat.id
+              ^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/pydantic/main.py", line 1026, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Update' object has no attribute 'chat'
+2026-06-05 18:53:51,206 | INFO | aiogram.event | feed_update:178 | Update id=487127988 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 18:53:51,207 | ERROR | aiogram.event | _process_update:325 | Cause exception while process update id=487127988 by bot id=8710131904
+AttributeError: 'Update' object has no attribute 'chat'
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/user_sync_middleware.py", line 9, in __call__
+    chat_id = event.chat.id
+              ^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/pydantic/main.py", line 1026, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Update' object has no attribute 'chat'
+2026-06-05 18:56:58,164 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
+2026-06-05 18:56:58,165 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 18:56:58,165 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 18:57:00,879 | INFO | aiogram.dispatcher | start_polling:596 | Start polling
+2026-06-05 18:57:00,982 | INFO | aiogram.dispatcher | _polling:378 | Run polling for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 18:57:52,871 | INFO | aiogram.event | feed_update:178 | Update id=487127990 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 18:57:52,871 | ERROR | aiogram.event | _process_update:325 | Cause exception while process update id=487127990 by bot id=8710131904
+AttributeError: 'Update' object has no attribute 'chat'
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/user_sync_middleware.py", line 13, in __call__
+    chat_id = event.chat.id
+              ^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/pydantic/main.py", line 1026, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Update' object has no attribute 'chat'
+2026-06-05 18:57:53,065 | INFO | aiogram.event | feed_update:178 | Update id=487127989 is handled. Duration 357 ms by bot id=8710131904
+2026-06-05 18:59:09,824 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
+2026-06-05 18:59:09,825 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 18:59:09,825 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 18:59:12,104 | INFO | aiogram.dispatcher | start_polling:596 | Start polling
+2026-06-05 18:59:12,198 | INFO | aiogram.dispatcher | _polling:378 | Run polling for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 18:59:16,690 | INFO | aiogram.event | feed_update:178 | Update id=487127991 is handled. Duration 9 ms by bot id=8710131904
+2026-06-05 18:59:16,774 | INFO | aiogram.event | feed_update:178 | Update id=487127992 is not handled. Duration 2 ms by bot id=8710131904
+2026-06-05 18:59:24,666 | INFO | aiogram.event | feed_update:178 | Update id=487127994 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 18:59:25,032 | INFO | aiogram.event | feed_update:178 | Update id=487127993 is handled. Duration 573 ms by bot id=8710131904
+2026-06-05 19:00:02,860 | INFO | aiogram.event | feed_update:178 | Update id=487127995 is handled. Duration 207 ms by bot id=8710131904
+2026-06-05 19:02:13,833 | INFO | aiogram.event | feed_update:178 | Update id=487127996 is not handled. Duration 1 ms by bot id=8710131904
+2026-06-05 19:02:15,240 | INFO | aiogram.event | feed_update:178 | Update id=487127997 is handled. Duration 4 ms by bot id=8710131904
+2026-06-05 19:02:15,325 | INFO | aiogram.event | feed_update:178 | Update id=487127998 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 19:03:34,500 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
+2026-06-05 19:03:34,500 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 19:03:34,501 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 19:03:38,117 | INFO | aiogram.dispatcher | start_polling:596 | Start polling
+2026-06-05 19:03:38,221 | INFO | aiogram.dispatcher | _polling:378 | Run polling for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 19:03:53,961 | INFO | aiogram.event | feed_update:178 | Update id=487127999 is not handled. Duration 1417 ms by bot id=8710131904
+2026-06-05 19:03:54,601 | INFO | aiogram.event | feed_update:178 | Update id=487128000 is handled. Duration 1341 ms by bot id=8710131904
+2026-06-05 19:05:41,063 | INFO | aiogram.event | feed_update:178 | Update id=487128003 is not handled. Duration 3 ms by bot id=8710131904
+2026-06-05 19:05:41,099 | INFO | aiogram.event | feed_update:178 | Update id=487128001 is handled. Duration 132 ms by bot id=8710131904
+2026-06-05 19:05:41,336 | INFO | aiogram.event | feed_update:178 | Update id=487128004 is handled. Duration 5 ms by bot id=8710131904
+2026-06-05 19:05:41,355 | INFO | aiogram.event | feed_update:178 | Update id=487128002 is not handled. Duration 295 ms by bot id=8710131904
+2026-06-05 19:05:47,756 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003793538570 user 8075767034 write unknown user asdsdasdas23
+2026-06-05 19:05:47,948 | INFO | aiogram.event | feed_update:178 | Update id=487128005 is handled. Duration 195 ms by bot id=8710131904
+2026-06-05 19:05:55,202 | INFO | aiogram.event | feed_update:178 | Update id=487128006 is handled. Duration 5 ms by bot id=8710131904
+2026-06-05 19:05:55,292 | INFO | aiogram.event | feed_update:178 | Update id=487128007 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 19:06:59,839 | INFO | aiogram.event | feed_update:178 | Update id=487128008 is handled. Duration 5 ms by bot id=8710131904
+2026-06-05 19:07:00,241 | INFO | aiogram.event | feed_update:178 | Update id=487128009 is not handled. Duration 202 ms by bot id=8710131904
+2026-06-05 19:07:00,242 | ERROR | aiogram.event | _process_update:325 | Cause exception while process update id=487128009 by bot id=8710131904
+TelegramForbiddenError: Telegram server says - Forbidden: bot was kicked from the supergroup chat
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/user_sync_middleware.py", line 19, in __call__
+    tg_member = await services.telegram_service.get_chat_member(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/core/telegram_service.py", line 133, in get_chat_member
+    tg_member = await self.bot.get_chat_member(chat_id, user_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 1659, in get_chat_member
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/aiohttp.py", line 177, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 129, in check_response
+    raise TelegramForbiddenError(method=method, message=description)
+aiogram.exceptions.TelegramForbiddenError: Telegram server says - Forbidden: bot was kicked from the supergroup chat
+2026-06-05 19:07:22,081 | INFO | aiogram.event | feed_update:178 | Update id=487128010 is handled. Duration 229 ms by bot id=8710131904
+2026-06-05 19:07:22,218 | INFO | aiogram.event | feed_update:178 | Update id=487128011 is not handled. Duration 164 ms by bot id=8710131904
+2026-06-05 19:08:03,322 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003793538570 user 8421643331 doesn't have enough rights
+2026-06-05 19:08:03,457 | INFO | aiogram.event | feed_update:178 | Update id=487128012 is handled. Duration 254 ms by bot id=8710131904
+2026-06-05 19:08:44,283 | INFO | aiogram.event | feed_update:178 | Update id=487128013 is not handled. Duration 1 ms by bot id=8710131904
+2026-06-05 19:08:47,398 | INFO | aiogram.event | feed_update:178 | Update id=487128014 is handled. Duration 6 ms by bot id=8710131904
+2026-06-05 19:08:47,490 | INFO | aiogram.event | feed_update:178 | Update id=487128015 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 19:09:35,283 | INFO | aiogram.event | feed_update:178 | Update id=487128016 is handled. Duration 212 ms by bot id=8710131904
+2026-06-05 19:09:35,372 | INFO | aiogram.event | feed_update:178 | Update id=487128017 is not handled. Duration 98 ms by bot id=8710131904
+2026-06-05 19:10:01,744 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -5150154087 AdminBot doesn't have enough rights
+2026-06-05 19:10:01,850 | INFO | aiogram.event | feed_update:178 | Update id=487128018 is handled. Duration 106 ms by bot id=8710131904
+2026-06-05 19:10:19,514 | INFO | aiogram.event | feed_update:178 | Update id=487128021 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 19:10:19,537 | INFO | aiogram.event | feed_update:178 | Update id=487128019 is handled. Duration 127 ms by bot id=8710131904
+2026-06-05 19:10:20,135 | INFO | aiogram.event | feed_update:178 | Update id=487128020 is not handled. Duration 622 ms by bot id=8710131904
+2026-06-05 19:10:20,136 | INFO | aiogram.event | feed_update:178 | Update id=487128022 is handled. Duration 6 ms by bot id=8710131904
+2026-06-05 19:10:36,616 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003565493013 user 8421643331 doesn't have enough rights
+2026-06-05 19:10:36,774 | INFO | aiogram.event | feed_update:178 | Update id=487128023 is handled. Duration 367 ms by bot id=8710131904
+2026-06-05 19:11:02,828 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003565493013 user 8421643331 doesn't have enough rights
+2026-06-05 19:11:03,029 | INFO | aiogram.event | feed_update:178 | Update id=487128024 is handled. Duration 201 ms by bot id=8710131904
+2026-06-05 19:11:11,121 | INFO | bot.handlers.group.admin_func | promote_demote:40 | in chat -1003565493013 user 8421643331 was promoted to admin
+2026-06-05 19:11:11,128 | INFO | aiogram.event | feed_update:178 | Update id=487128026 is handled. Duration 8 ms by bot id=8710131904
+2026-06-05 19:11:11,327 | INFO | aiogram.event | feed_update:178 | Update id=487128025 is handled. Duration 410 ms by bot id=8710131904
+2026-06-05 19:11:24,865 | INFO | bot.handlers.group.admin_func | promote_demote:40 | in chat -1003565493013 admin 8421643331 was demoted to user
+2026-06-05 19:11:24,875 | INFO | aiogram.event | feed_update:178 | Update id=487128028 is handled. Duration 5 ms by bot id=8710131904
+2026-06-05 19:11:24,994 | INFO | aiogram.event | feed_update:178 | Update id=487128027 is handled. Duration 378 ms by bot id=8710131904
+2026-06-05 19:12:16,277 | INFO | aiogram.event | feed_update:178 | Update id=487128029 is handled. Duration 6 ms by bot id=8710131904
+2026-06-05 19:12:16,373 | INFO | aiogram.event | feed_update:178 | Update id=487128030 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 19:12:17,787 | INFO | aiogram.event | feed_update:178 | Update id=487128031 is handled. Duration 7 ms by bot id=8710131904
+2026-06-05 19:12:17,872 | INFO | aiogram.event | feed_update:178 | Update id=487128032 is not handled. Duration 0 ms by bot id=8710131904
+2026-06-05 19:12:20,856 | INFO | aiogram.event | feed_update:178 | Update id=487128033 is handled. Duration 4 ms by bot id=8710131904
+2026-06-05 19:12:20,947 | INFO | aiogram.event | feed_update:178 | Update id=487128034 is handled. Duration 1 ms by bot id=8710131904
+2026-06-05 19:15:23,276 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
+2026-06-05 19:15:23,276 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 19:15:23,277 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
