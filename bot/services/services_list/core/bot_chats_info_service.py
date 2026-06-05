@@ -53,7 +53,7 @@ class BotChatsInfoService:
 	async def get_bots(self) -> list[BotChatInfo]:
 		key = self._bots_key()
 		cached = await get_cache(key)
-		if cached is not None:
+		if cached:
 			return [self._deserialize(b) for b in cached]
 
 		async with get_session() as session:
@@ -80,12 +80,15 @@ class BotChatsInfoService:
 				bot.bot_user_permissions = bot_user_permissions
 				bot.bot_admin_permissions = bot_admin_permissions
 			else:
-				bot = await create_bot_crud(session, chat_id,
-											chat_type,
-											chat_username,
-											bot_role,
-											bot_user_permissions,
-											bot_admin_permissions)
+				bot = await create_bot_crud(
+					session,
+					chat_id,
+					chat_type,
+					chat_username,
+					bot_role,
+					bot_user_permissions,
+					bot_admin_permissions
+				)
 
 		key = self._key(chat_id)
 		data = self._serialize(bot)

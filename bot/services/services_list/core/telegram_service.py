@@ -1,6 +1,6 @@
 from aiogram import Bot
-from aiogram.types import ChatPermissions
 
+from aiogram.types import ChatPermissions
 from aiogram.types import (
 	ChatMemberUnion,
 	ChatMemberAdministrator,
@@ -60,6 +60,7 @@ USER_RIGHTS = (
 
 TELEGRAM_TTL = 60
 TELEGRAM_ADMINS_TTL = 300
+TELEGRAM_ME_TTL = 3600
 
 class TelegramService:
 	def __init__(self, bot: Bot):
@@ -129,10 +130,7 @@ class TelegramService:
 		if cached:
 			return self._deserialize(cached)
 
-		try:
-			tg_member = await self.bot.get_chat_member(chat_id, user_id)
-		except Exception as e:
-			return None
+		tg_member = await self.bot.get_chat_member(chat_id, user_id)
 		await set_cache(key, TELEGRAM_TTL, self._serialize(tg_member))
 		return tg_member
 
@@ -152,16 +150,6 @@ class TelegramService:
 			[self._serialize(admin) for admin in admins]
 		)
 		return admins
-
-	async def is_admin(self, chat_id: int, user_id: int) -> bool:
-		key = self._tg_member_key(chat_id, user_id)
-		cached = await get_cache(key)
-		if cached:
-			member = self._deserialize(cached)
-			return member.status in ("administrator", "creator")
-
-		member = await self.get_chat_member(chat_id, user_id)
-		return member.status in ("administrator", "creator")
 
 	async def promote_chat_member(self, chat_id: int, user_id: int,
 								  rights: dict):
@@ -195,9 +183,3 @@ class TelegramService:
 
 	async def delete_message(self, chat_id: int, message_id: int):
 		await self.bot.delete_message(chat_id, message_id)
-
-	async def send_message(self, chat_id: int, text: str):
-		return await self.bot.send_message(chat_id, text)
-
-	async def get_me(self):
-		return await self.bot.get_me()

@@ -131,11 +131,15 @@ async def help_callback(callback: CallbackQuery):
 
 @router.message(Command("info"))
 async def info(message: Message):
-    await message.answer(
-        "ℹ️ Информация о боте\n\n"
-        "Автор: @F3m_b0y\n"
-        "Лицензия: MIT\n"
-        "Описание: Этот бот помогает администрировать вашу группу.\n"
-        "Версия: 0.5.0"
+	await message.answer(
+		"🤖 <b>AdminBot</b>\n\n"
+		"📌 <b>Описание:</b>\n"
+		"Бот для администрирования и управления группами\n\n"
+		"👤 <b>Автор:</b>\n"
+		"@F3m_b0y\n\n"
+		"📦 <b>Версия:</b>\n"
+		"0.5.1\n\n"
+		"⚖️ <b>Лицензия:</b>\n"
+		"MIT",
+		parse_mode="HTML"
 	)
-

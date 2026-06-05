@@ -5,6 +5,16 @@ from aiogram.exceptions import TelegramBadRequest
 
 from datetime import datetime, timedelta
 
+from bot.exceptions import (
+	TooManyArgumentsError,
+	InvalidTimeArgumentError,
+	CantModerateAdminBotError,
+	UserNotFoundError,
+	InvalidUsernameOrIdInArgumentsError,
+	DoubleUsernameInArgumentsError,
+	NoUserInArgumentsError,
+)
+
 class UtilsService:
 	def __init__(
 		self,
@@ -15,61 +25,67 @@ class UtilsService:
 		self.telegram_service = telegram_service
 
 	@staticmethod
-	def get_end_time(args: list) -> datetime | None:
+	def get_end_time(args: list) -> datetime:
 		if len(args) > 3:
-			return None
+			raise TooManyArgumentsError
 
 		if len(args) == 1:
 			return datetime(3000, 1, 1)
 
 		if not args[-1].isdigit():
-			if len(args) == 2:
+			if len(args) == 2 and args[-1].startswith("@"):
 				return datetime(3000, 1, 1)
-			return None
+			raise InvalidTimeArgumentError
 
 		seconds = int(args[-1])
 		if seconds <= 0:
-			return None
+			raise InvalidTimeArgumentError
 		return datetime.utcnow() + timedelta(seconds=seconds)
 
-	async def get_id(self, chat_id: int, target: int | str) -> int | str:
+	async def get_id(self, chat_id: int, target: int | str) -> int:
 		if target.startswith("@"):
 			username = target[1:]
+			if username == "moderation_control_bot":
+				raise CantModerateAdminBotError
 			member = await self.members_service.get_member_by_username(
 				chat_id,
 				username
 			)
 			if member is None:
-				return "❌ Юзер не найден"
+				raise UserNotFoundError(username)
 			return member.user_id
 		if target.isdigit():
 			return int(target)
-		return "❌ Некорректный юзернейм/айди"
+		raise InvalidUsernameOrIdInArgumentsError
 	
 	async def get_id_and_name(self, message: Message, args: list):
 		if message.reply_to_message:
 			if len(args) > 2:
-				return None, "❌ Слишком много аргументов для реплая"
-			if len(args) == 2 and not args[1].isdigit:
-				return None, "❌ Временной аргумент некорректен"
+				raise TooManyArgumentsError
+			if len(args) == 2:
+				if args[1].startswith("@"):
+					raise DoubleUsernameInArgumentsError
+				if not args[1].isdigit:
+					raise InvalidTimeArgumentError
 			user = message.reply_to_message.from_user
 			user_id = user.id
 			name = f"@{user.username}" if user.username else user.full_name
 			return user_id, name
 
 		if len(args) < 2:
-			return None, "❌ Отсутствует пользователь"
+			raise NoUserInArgumentsError
+
+		if args[0] == "/kick" and len(args) > 2:
+			raise TooManyArgumentsError
 
 		user_id = await self.get_id(message.chat.id, args[1])
-		if isinstance(user_id, str):
-			return None, user_id
 
 		member = await self.telegram_service.get_chat_member(
 			message.chat.id,
 			user_id
 		)
 		if not member:
-			return None, "❌ Юзер не найден"
+			raise UserNotFoundError(user_id)
 
 		name = f"@{member.user.username}" if member.user.username \
 										  else member.user.full_name

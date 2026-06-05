@@ -12,6 +12,12 @@ from bot.storages.redis.cache import (
 )
 from bot.storages.postgre.models import ChatSettings
 
+from bot.exceptions import (
+	TooManyArgumentsError,
+	MissingArgumentsError,
+	InvalidSettingModeError
+)
+
 CHATS_SETTINGS_TTL = 300
 
 class ChatsSettingsService:
@@ -91,12 +97,18 @@ class ChatsSettingsService:
 		await delete_cache(key)
 		await delete_cache(self._all_settings_key())
 
-	async def chat_settings_switch(self, chat_id: int, args: list,
-								   settings_dict_name: str) -> str:
-		if len(args) != 2:
-			return "❌ Выберите режим on/off"
+	async def chat_settings_switch(
+		self,
+		chat_id: int,
+		args: list,
+		settings_dict_name: str
+	) -> str:
+		if len(args) > 2:
+			raise TooManyArgumentsError
+		if len(args) < 2:
+			raise MissingArgumentsError
 		if not args[1] in ["on", "off"]:
-			return "❌ Неизвестный режим"
+			raise InvalidSettingModeError
 
 		async with get_session() as session:
 			chat_settings = await get_settings_crud(session, chat_id)

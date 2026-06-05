@@ -85,7 +85,7 @@ class MembersService:
 	async def get_members(self, chat_id: int) -> list[Member]:
 		key = self._members_key(chat_id)
 		cached = await get_cache(key)
-		if cached is not None:
+		if cached:
 			return [self._deserialize(m) for m in cached]
 
 		async with get_session() as session:
@@ -112,12 +112,19 @@ class MembersService:
 				member.user_permissions = user_permissions
 				member.admin_permissions = admin_permissions
 			else:
-				member = await create_member_crud(session, chat_id, user_id,
-												  username,
-												  role,
-												  user_permissions,
-												  admin_permissions,
-												  None, None, None, None)
+				member = await create_member_crud(
+					session,
+					chat_id,
+					user_id,
+					username,
+					role,
+					user_permissions,
+					admin_permissions,
+					None,
+					None,
+					None,
+					None
+				)
 
 		key = self._key(chat_id, user_id)
 		data = self._serialize(member)
@@ -133,11 +140,15 @@ class MembersService:
 		await delete_cache(key)
 		await delete_cache(self._members_key(chat_id))
 	
-	async def update_punishments(self, chat_id: int, user_id: int,
-								 restricted_status: str | None = None,
-								 admin_who_restricted: str | None = None,
-								 start_time=None,
-								 end_time=None) -> Member:
+	async def update_punishments(
+		self,
+		chat_id: int,
+		user_id: int,
+		restricted_status: str | None = None,
+		admin_who_restricted: str | None = None,
+		start_time=None,
+		end_time=None
+	) -> Member:
 		async with get_session() as session:
 			member = await get_member_crud(session, chat_id, user_id)
 			member.restricted_status = restricted_status

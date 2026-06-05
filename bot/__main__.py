@@ -1,8 +1,8 @@
 import asyncio
-import logging
-import sys
 
 from aiogram import Bot, Dispatcher
+
+from bot.logger import setup_logger
 
 from bot.config_reader import get_config, BotConfig
 
@@ -32,5 +32,5 @@ async def main():
 	await dp.start_polling(bot)
 
 if __name__ == "__main__":
-	logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+	setup_logger()
 	asyncio.run(main())

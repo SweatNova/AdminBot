@@ -18,11 +18,13 @@ class ServicesContainer:
 
 		self.admin_service = AdminService(
 			self.members_service,
+			self.bot_chats_info_service,
 			self.chats_settings_service,
 			self.telegram_service
 		)
 		self.bans_service = BansService(
 			self.members_service,
+			self.bot_chats_info_service,
 			self.telegram_service
 		)
 		self.utils_service = UtilsService(

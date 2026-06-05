@@ -4,6 +4,8 @@ from typing import Callable, Any, Awaitable
 
 from bot.services.services_container import ServicesContainer
 
+from bot.exceptions import UserHasNoRightsError, AdminBotHasNoRightsError
+
 class AdminMiddleware(BaseMiddleware):
 	async def __call__(
 		self,
@@ -24,20 +26,13 @@ class AdminMiddleware(BaseMiddleware):
 			chat_id
 		)
 		adminerror = chat_settings.admin["adminerror"]
+		data["adminerror"] = chat_settings.admin["adminerror"]
 
-		if not await services.telegram_service.is_admin(chat_id, user_id):
-			if adminerror:
-				await event.reply("❌ У вас недостаточно прав")
-				return
-			return
+		member = await services.members_service.get_member(chat_id, user_id)
+		if member.role not in ("creator", "admin"):
+			raise UserHasNoRightsError
 
-		bot = await services.telegram_service.get_chat_member(
-			chat_id,
-			data["bot"].id
-		)
-		if bot.status not in ("administrator", "creator"):
-			if adminerror:
-				await event.reply("❌ У бота нет прав администратора")
-				return
-			return
+		bot = await services.bot_chats_info_service.get_bot(chat_id)
+		if bot.bot_role not in ("creator", "admin"):
+			raise AdminBotHasNoRightsError
 		return await handler(event, data)
