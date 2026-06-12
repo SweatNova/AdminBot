@@ -16,4 +16,4 @@ stop tracking settings.toml - update .gitignore
 0.5.0 - global architectural update   
 0.5.1 - added an extended logging system, improved error handling, cleaned up unnecessary code, and added an MIT license   
 0.5.1.1 - fixed an issue where the bot could not see group members who joined before it was added      
-0.5.2 - Logging system updated and almost completely reworkedб пeneral improvements and optimizations   
+0.5.2 - logging system updated and almost completely reworked general improvements and optimizations   
