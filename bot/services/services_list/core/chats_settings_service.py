@@ -117,9 +117,9 @@ class ChatsSettingsService:
 			setting = args[0][1:]
 			if args[1] == "on":
 				settings_dict[setting] = True
-				text = "включенна"
+				text = "enabled"
 			else:
 				settings_dict[setting] = False
-				text = "выключенна"
+				text = "disabled"
 		await self.upsert_settings(chat_id, settings_dict)
-		return f"✅ Настройка {args[0]} теперь {text}"
+		return f"✅ The setting {args[0]} is now {text}"

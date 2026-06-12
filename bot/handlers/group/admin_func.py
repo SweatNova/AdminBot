@@ -21,7 +21,7 @@ router.message.middleware(AdminMiddleware())
 @router.message(Command("promote", "demote"))
 async def promote_demote(message: Message, services: ServicesContainer):
 	args = message.text.split()
-	user_id, username = await services.utils_service.get_id_and_name(
+	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
 		args
 	)
@@ -29,23 +29,19 @@ async def promote_demote(message: Message, services: ServicesContainer):
 	is_promote = message.text.startswith("/promote")
 	result = await services.admin_service.change_admin_role(
 		message.chat.id,
-		user_id,
-		username,
+		target_id,
+		target_username,
 		is_promote
 	)
 
-	action = "promoted" if is_promote else "demoted"
-	old_role = "user" if is_promote else "admin"
-	new_role = "admin" if is_promote else "user"
+	event_type = "PROMOTE" if is_promote else "DEMOTE"
 	logger.info(
-		"in chat %s %s %s was %s to %s",
+		"%s | chat_id=%s admin_id=%s target_id=%s",
+		event_type,
 		message.chat.id,
-		old_role,
-		user_id,
-		action,
-		new_role
+		message.from_user.id,
+		target_id,
 	)
-	
 	await message.reply(result)
 
 @router.message(Command("adminlist"))
@@ -57,12 +53,17 @@ async def adminlist(message: Message, services: ServicesContainer):
 		f"{a.status} | {a.user.id} | @{a.user.username or 'no_username'}"
 		for a in admins
 	)
+
+	event_type = "ADMINLIST"
 	logger.info(
-		"in chat %s admin %s invoked command adminlist",
+		"%s | chat_id=%s admin_id=%s",
+		event_type,
 		message.chat.id,
 		message.from_user.id,
 	)
-	await message.reply("✅ Вот весь список админов чата: \n" + text)
+	await message.reply(
+		"✅ Here is the full list of chat administrators: \n" + text
+	)
 
 @router.message(Command("anonadmin", "adminerror"))
 async def anonadmin_adminerror(message: Message, services: ServicesContainer):
@@ -72,12 +73,12 @@ async def anonadmin_adminerror(message: Message, services: ServicesContainer):
 		message.chat.id,
 		args
 	)
+
+	event_type = "ANONADMIN" if args[0] == "/anonadmin" else "ADMINERROR"
 	logger.info(
-		"in chat %s admin %s switched setting %s to %s",
+		"%s | chat_id=%s user_id=%s",
+		event_type,
 		message.chat.id,
 		message.from_user.id,
-		"anonadmin" if args[0] == "/anonadmin" else "adminerror",
-		"on" if args[1] == "on" else "off"
 	)
-
 	await message.reply(result)

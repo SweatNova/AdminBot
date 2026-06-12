@@ -1,5 +1,7 @@
 from aiogram import BaseMiddleware
 
+from aiogram.exceptions import TelegramBadRequest
+
 from bot.exceptions import BotError
 
 import logging
@@ -15,7 +17,10 @@ class ErrorMiddleware(BaseMiddleware):
 		except BotError as e:
 			logger.warning(e.log(event))
 			if adminerror:
-				await event.answer(str(e))
+				try:
+					await event.answer(str(e))
+				except TelegramBadRequest:
+					pass
 
 		except Exception:
 			logger.exception("Unhandled exception")

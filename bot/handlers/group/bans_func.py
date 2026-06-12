@@ -21,7 +21,7 @@ router.message.middleware(AdminMiddleware())
 @router.message(Command("ban", "dban", "sban"))
 async def ban(message: Message, services: ServicesContainer):
 	args = message.text.split()
-	user_id, username = await services.utils_service.get_id_and_name(
+	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
 		args
 	)
@@ -32,52 +32,58 @@ async def ban(message: Message, services: ServicesContainer):
 
 	result = await services.bans_service.ban(
 		message.chat.id,
-		user_id,
-		username,
+		target_id,
+		target_username,
 		message,
 		delete,
 		secret,
 		until_time
 	)
 
+	if delete:
+		event_type = "DBAN"
+	elif secret:
+		event_type = "SBAN"
+	else:
+		event_type = "BAN"
 	logger.info(
-		"in chat %s user %s was %s by admin %s",
+		"%s | chat_id=%s user_id=%s target_id=%s",
+		event_type,
 		message.chat.id,
-		user_id,
-		"banned",
-		message.from_user.id
-    )
-
+		message.from_user.id,
+		target_id,
+	)
 	if not secret:
 		await message.reply(result)
 
 @router.message(Command("unban"))
 async def unban(message: Message, services: ServicesContainer):
 	args = message.text.split()
-	user_id, username = await services.utils_service.get_id_and_name(
+	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
 		args
 	)
 
 	result = await services.bans_service.unban(
 		message.chat.id,
-		user_id,
-		username
+		target_id,
+		target_username
 	)
 
+	event_type = "UNBAN"
 	logger.info(
-		"in chat %s user %s was %s by admin %s",
+		"%s | chat_id=%s user_id=%s target_id=%s",
+		event_type,
 		message.chat.id,
-		user_id,
-		"unbanned",
-		message.from_user.id
+		message.from_user.id,
+		target_id,
 	)
 	await message.reply(result)
 
 @router.message(Command("mute", "dmute", "smute"))
 async def mute(message: Message, services: ServicesContainer):
 	args = message.text.split()
-	user_id, username = await services.utils_service.get_id_and_name(
+	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
 		args
 	)
@@ -88,53 +94,58 @@ async def mute(message: Message, services: ServicesContainer):
 
 	result = await services.bans_service.mute(
 		message.chat.id,
-		user_id,
-		username,
+		target_id,
+		target_username,
 		message,
 		delete,
 		secret,
 		until_time,
 	)
 
+	if delete:
+		event_type = "DMUTE"
+	elif secret:
+		event_type = "SMUTE"
+	else:
+		event_type = "MUTE"
 	logger.info(
-		"in chat %s user %s was %s by admin %s",
+		"%s | chat_id=%s user_id=%s target_id=%s",
+		event_type,
 		message.chat.id,
-		user_id,
-		"muted",
-		message.from_user.id
+		message.from_user.id,
+		target_id,
 	)
-
 	if not secret:
 		await message.reply(result)
 
 @router.message(Command("unmute"))
 async def unmute(message: Message, services: ServicesContainer):
 	args = message.text.split()
-	user_id, username = await services.utils_service.get_id_and_name(
+	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
 		args
 	)
 
 	result = await services.bans_service.unmute(
 		message.chat.id,
-		user_id,
-		username
+		target_id,
+		target_username
 	)
 
+	event_type = "UNMUTE"
 	logger.info(
-		"in chat %s user %s was %s by admin %s",
+		"%s | chat_id=%s user_id=%s target_id=%s",
+		event_type,
 		message.chat.id,
-		user_id,
-		"unmuted",
-		message.from_user.id
+		message.from_user.id,
+		target_id,
 	)
-
 	await message.reply(result)
 
 @router.message(Command("kick", "dkick", "skick"))
 async def kick(message: Message, services: ServicesContainer):
 	args = message.text.split()
-	user_id, username = await services.utils_service.get_id_and_name(
+	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
 		args
 	)
@@ -144,21 +155,26 @@ async def kick(message: Message, services: ServicesContainer):
 
 	result = await services.bans_service.kick(
 		message.chat.id,
-		user_id,
-		username,
+		target_id,
+		target_username,
 		message,
 		delete,
-		secret,
+		secret
 	)
 
+	if delete:
+		event_type = "DKICK"
+	elif secret:
+		event_type = "SKICK"
+	else:
+		event_type = "KICK"
 	logger.info(
-		"in chat %s user %s was %s by admin %s",
+		"%s | chat_id=%s user_id=%s target_id=%s",
+		event_type,
 		message.chat.id,
-		user_id,
-		"kicked",
-		message.from_user.id
+		message.from_user.id,
+		target_id,
 	)
-
 	if not secret:
 		await message.reply(result)
 
@@ -172,5 +188,13 @@ async def kickme(message: Message, services: ServicesContainer):
 		message.chat.id,
 		message.from_user.id,
 		username
+	)
+
+	event_type = "KICKME"
+	logger.info(
+		"%s | chat_id=%s user_id=%s",
+		event_type,
+		message.chat.id,
+		message.from_user.id
 	)
 	await message.reply(result)

@@ -10,17 +10,19 @@ router.message.filter(ChatTypeFilter(ChatType.PRIVATE))
 
 @router.message(Command("start"))
 async def start(message: Message):
-	await message.reply("Привет!\n"
-						"AdminBot это кастомный админ-бот который поможет тебе "
-						"контролировать твою группу!\n\n" 
-						"Добавь меня в группу чтобы увидеть функционал и сделай" 						" админом, в ЛС я даю только инструкцию\n\n"
-						"Введите '/help' для получения инструкции")
+	await message.reply("Hello!\n"
+						"AdminBot is a custom admin bot that helps you "
+						"manage your group!\n\n"
+						"Add me to your group to see the available features "
+						"and grant me administrator rights. "
+						"In private messages I only provide instructions.\n\n"
+						"Enter '/help' to get the guide.")
 
 @router.message(Command("help"))
 async def help(message: Message):
-	await message.reply("Привет!\n")		
+	await message.reply("Hello!\n")
 
 @router.message()
 async def all_another(message: Message):
-	await message.reply("Неизвестная команда"
-						", введите /help для получения инструкции")
+	await message.reply("Unknown command, "
+						"enter /help to get the guide.")

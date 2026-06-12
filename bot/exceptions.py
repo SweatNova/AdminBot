@@ -1,5 +1,5 @@
 class BotError(Exception):
-	message = "❌ Ошибка"
+	message = "❌ Error"
 
 	def __str__(self):
 		return self.message
@@ -8,7 +8,7 @@ class BotError(Exception):
 		return "Error"
 
 class UserNotFoundError(BotError):
-	message = "❌ Юзер не найден"
+	message = "❌ User not found"
 
 	def __init__(self, user_id_or_username: int | str):
 		self.user_id_or_username = user_id_or_username
@@ -19,75 +19,72 @@ class UserNotFoundError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} write "
-			f"unknown user {self.user_id_or_username}"
+			f"USER_NOT_FOUND | chat_id={chat_id} user_id={user_id} "
+			f"target_id={self.user_id_or_username}"
 		)
 
 class NoUserInArgumentsError(BotError):
-	message = "❌ Oтсутствует юзер"
+	message = "❌ User is missing"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} missing username argument"
+		return f"NO_USER_IN_ARGS | chat_id={chat_id} user_id={user_id}"
 
 class DoubleUsernameInArgumentsError(BotError):
-	message = "❌ Лишний юзернейм в команде"
+	message = "❌ Extra username in command"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return (
-			f"in chat {chat_id} user {user_id} write "
-			"double username in arguments"
-		)
+		return f"DOUBLE_USER_IN_ARGS | chat_id={chat_id} user_id={user_id}"
 
 class InvalidUsernameOrIdInArgumentsError(BotError):
-	message = "❌ Некорректный юзернейм/айди"
+	message = "❌ Invalid username/ID"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} write invalid username or id"
+		return f"INVALID_USER_OR_ID | chat_id={chat_id} user_id={user_id}"
 
 class TooManyArgumentsError(BotError):
-	message = "❌ Слишком много аргументов"
+	message = "❌ Too many arguments"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} write too many arguments"
+		return f"TOO_MANY_ARGS | chat_id={chat_id} user_id={user_id}"
 
 class MissingArgumentsError(BotError):
-	message = "❌ Недостаточно аргументов"
+	message = "❌ Not enough arguments"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} missing arguments"
+		return f"MISSING_ARGS | chat_id={chat_id} user_id={user_id}"
 
 class InvalidTimeArgumentError(BotError):
-	message = "❌ Некорректный временной аргумент"
+	message = "❌ Invalid time argument"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} write invalid time argument"
+		return f"INVALID_TIME_ARG | chat_id={chat_id} user_id={user_id}"
 
 class CantChangeBotsRightsError(BotError):
-	message = "❌ Бот не может менять права другим ботам"
+	message = "❌ Cannot change rights of other bots"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
@@ -95,15 +92,14 @@ class CantChangeBotsRightsError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} tried to change "
-			"another bot rights"
+			f"CANT_CHANGE_BOTS_RIGHTS | chat_id={chat_id} user_id={user_id}"
 		)
 
 class CantModerateAssignedNotByBotAdminsError(BotError):
-	message = "❌ Бот не может модерировать админов назначенных не им"
+	message = "❌ Cannot moderate admins not appointed by the bot"
 
-	def __init__(self, admin_id: int):
-		self.admin_id = admin_id
+	def __init__(self, target_id: int):
+		self.target_id = target_id
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
@@ -111,43 +107,43 @@ class CantModerateAssignedNotByBotAdminsError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} tried to moderate "
-			f"assigned not by AdminBot admin {self.admin_id}"
+			f"CANT_MODERATE_ASSIGNED_NOT_BY_BOT_ADMINS | chat_id={chat_id} "
+			f"user_id={user_id} target_id={self.target_id}"
 		)
 
 class AdminBotHasNoRightsError(BotError):
-	message = "❌ У бота недостаточно прав"
+	message = "❌ Bot does not have enough rights"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 
-		return f"in chat {chat_id} AdminBot doesn't have enough rights"
+		return f"BOT_HAS_NO_RIGHTS | chat_id={chat_id}"
 
 class UserHasNoRightsError(BotError):
-	message = "❌ У вас недостаточно прав"
+	message = "❌ You do not have enough rights"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} doesn't have enough rights"
+		return f"USER_HAS_NO_RIGHTS | chat_id={chat_id} user_id={user_id}"
 
 class CantModerateAdminBotError(BotError):
-	message = "❌ Нельзя модерировать самого бота"
+	message = "❌ Cannot moderate the bot itself"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} tried to moderate AdminBot"
+		return f"CANT_MODERATE_BOT | chat_id={chat_id} user_id={user_id}"
 
 class CantBanAdminError(BotError):
-	message = "❌ Нельзя банить админов"
+	message = "❌ Cannot ban administrators"
 
-	def __init__(self, admin_id: int):
-		self.admin_id = admin_id
+	def __init__(self, target_id: int):
+		self.target_id = target_id
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
@@ -155,15 +151,15 @@ class CantBanAdminError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} "
-			f"tried to ban admin {self.admin_id}"
+			f"CANT_BAN_ADMIN | chat_id={chat_id} user_id={user_id} "
+			f"target_id={self.target_id}"
 		)
 
 class UserNotBannedError(BotError): 
-	message = "❌ Юзер не в бане"
+	message = "❌ User is not banned"
 
-	def __init__(self, victim_id: int):
-		self.victim_id = victim_id
+	def __init__(self, target_id: int):
+		self.target_id = target_id
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
@@ -171,15 +167,15 @@ class UserNotBannedError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} tried to unban "
-			f"not banned user {self.victim_id}"
+			f"USER_NOT_BANNED | chat_id={chat_id} user_id={user_id} "
+			f"target_id={self.target_id}"
 		)
 
 class CantMuteAdminError(BotError):
-	message = "❌ Нельзя мутить админов"
+	message = "❌ Cannot mute administrators"
 
-	def __init__(self, admin_id: int):
-		self.admin_id = admin_id
+	def __init__(self, target_id: int):
+		self.target_id = target_id
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
@@ -187,15 +183,15 @@ class CantMuteAdminError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} "
-			f"tried to mute admin {self.admin_id}"
+			f"CANT_MUTE_ADMIN | chat_id={chat_id} user_id={user_id} "
+			f"target_id={self.target_id}"
 		)
 
 class UserNotMutedError(BotError):
-	message = "❌ Юзер не в муте"
+	message = "❌ User is not muted"
 
-	def __init__(self, victim_id: int):
-		self.victim_id = victim_id
+	def __init__(self, target_id: int):
+		self.target_id = target_id
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
@@ -203,15 +199,15 @@ class UserNotMutedError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} tried to unmute "
-			f"not muted user {self.victim_id}"
+			f"USER_NOT_MUTED | chat_id={chat_id} user_id={user_id} "
+			f"target_id={self.target_id}"
 		)
 
 class CantKickAdminError(BotError):
-	message = "❌ Нельзя кикать админов"
+	message = "❌ Cannot kick administrators"
 
-	def __init__(self, admin_id: int):
-		self.admin_id = admin_id
+	def __init__(self, target_id: int):
+		self.target_id = target_id
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
@@ -219,36 +215,36 @@ class CantKickAdminError(BotError):
 		user_id = getattr(user, "id", None) if user else None
 
 		return (
-			f"in chat {chat_id} user {user_id} "
-			f"tried to kick admin {self.admin_id}"
+			f"CANT_KICK_ADMIN | chat_id={chat_id} user_id={user_id} "
+			f"target_id={self.target_id}"
 		)
 
 class KickMeAdminError(BotError):
-	message = "❌ Лишите себя прав администратора для выполнения команды"
+	message = "❌ Remove your administrator rights to use this command"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} tried kickme but is admin"
+		return f"KICKME_ADMIN | chat_id={chat_id} user_id={user_id}"
 
 class NeedReplyToMessageError(BotError):
-	message = "❌ Команде требуется реплай на сообщениe"
+	message = "❌ This command requires replying to a message"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} missing reply"
+		return f"NEED_REPLY_TO_MESSAGE | chat_id={chat_id} user_id={user_id}"
 
 class InvalidSettingModeError(BotError):
-	message = "❌ Неизвестный режим настройки"
+	message = "❌ Unknown setting mode"
 
 	def log(self, event):
 		chat_id = getattr(getattr(event, "chat", None), "id", None)
 		user = getattr(event, "from_user", None)
 		user_id = getattr(user, "id", None) if user else None
 
-		return f"in chat {chat_id} user {user_id} write invalid setting mode"
+		return f"INVALID_SETTING_MODE | chat_id={chat_id} user_id={user_id}"

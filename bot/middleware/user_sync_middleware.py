@@ -5,7 +5,7 @@ from bot.services.services_container import ServicesContainer
 class UserSyncMiddleware(BaseMiddleware):
 	async def __call__(self, handler, event, data):
 		message = event.message
-		if message is None:
+		if message is None or not message.text:
 			return await handler(event, data)
 
 		services: ServicesContainer = data["services"]
@@ -36,4 +36,3 @@ class UserSyncMiddleware(BaseMiddleware):
 				admin_permissions	
 			)
 		return await handler(event, data)
-

@@ -2079,3 +2079,623 @@ aiogram.exceptions.TelegramForbiddenError: Telegram server says - Forbidden: bot
 2026-06-05 19:15:23,276 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
 2026-06-05 19:15:23,276 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
 2026-06-05 19:15:23,277 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 19:54:00,719 | INFO | aiogram.dispatcher | start_polling:596 | Start polling
+2026-06-05 19:54:00,822 | INFO | aiogram.dispatcher | _polling:378 | Run polling for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 19:54:09,957 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-05 19:54:11,445 | INFO | aiogram.event | feed_update:178 | Update id=487128035 is handled. Duration 1496 ms by bot id=8710131904
+2026-06-05 20:02:02,014 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
+2026-06-05 20:02:02,014 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 20:02:02,014 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 20:02:04,762 | INFO | aiogram.dispatcher | start_polling:596 | Start polling
+2026-06-05 20:02:04,864 | INFO | aiogram.dispatcher | _polling:378 | Run polling for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 20:02:09,343 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-05 20:02:09,652 | INFO | aiogram.event | feed_update:178 | Update id=487128036 is handled. Duration 317 ms by bot id=8710131904
+2026-06-05 20:02:14,332 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-05 20:02:14,454 | INFO | aiogram.event | feed_update:178 | Update id=487128037 is handled. Duration 122 ms by bot id=8710131904
+2026-06-05 20:04:06,143 | WARNING | aiogram.dispatcher | _signal_stop_polling:515 | Received SIGINT signal
+2026-06-05 20:04:06,143 | INFO | aiogram.dispatcher | _polling:413 | Polling stopped for bot @moderation_control_bot id=8710131904 - 'AdminBot'
+2026-06-05 20:04:06,143 | INFO | aiogram.dispatcher | start_polling:624 | Polling stopped
+2026-06-05 20:07:37,836 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-05 20:07:45,239 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-05 20:25:53,996 | INFO | bot.handlers.group.bans_func | ban:43 | in chat -1003538569618 user 8421643331 was banned by admin 8075767034
+2026-06-10 09:55:46,367 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-10 09:55:53,843 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-10 09:56:04,242 | INFO | bot.handlers.group.bans_func | ban:43 | in chat -1003538569618 user 8421643331 was banned by admin 8075767034
+2026-06-10 09:59:43,795 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-10 09:59:45,034 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-10 09:59:46,285 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-10 09:59:50,900 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 tried to mute admin 8075767034
+2026-06-10 10:02:25,190 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 24, in ban
+    user_id, username = await services.utils_service.get_id_and_name(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/utils_service.py", line 83, in get_id_and_name
+    member = await self.telegram_service.get_chat_member(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/core/telegram_service.py", line 133, in get_chat_member
+    tg_member = await self.bot.get_chat_member(chat_id, user_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 1659, in get_chat_member
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/aiohttp.py", line 177, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 121, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: PARTICIPANT_ID_INVALID
+2026-06-10 10:02:39,650 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 write unknown user sad
+2026-06-10 10:02:46,304 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 24, in ban
+    user_id, username = await services.utils_service.get_id_and_name(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/utils_service.py", line 83, in get_id_and_name
+    member = await self.telegram_service.get_chat_member(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/core/telegram_service.py", line 133, in get_chat_member
+    tg_member = await self.bot.get_chat_member(chat_id, user_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 1659, in get_chat_member
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/aiohttp.py", line 177, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 121, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: PARTICIPANT_ID_INVALID
+2026-06-10 10:08:24,528 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 write unknown user 123
+2026-06-10 11:40:07,969 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-10 11:40:14,957 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 tried kickme but is admin
+2026-06-10 11:40:24,330 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003538569618 user_id=8075767034 target_id=8421643331
+2026-06-10 11:40:52,136 | INFO | bot.handlers.group.bans_func | kick:171 | KICK | chat_id=-1003538569618 user_id=8075767034 target_id=8421643331
+2026-06-10 11:42:02,376 | INFO | bot.handlers.group.bans_func | kick:171 | KICK | chat_id=-1003538569618 user_id=8075767034 target_id=8421643331
+2026-06-10 21:28:57,525 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-11 11:55:26,331 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-11 11:55:40,484 | INFO | bot.handlers.group.management | chat_member:98 | USER_BANNED | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 11:55:40,489 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003538569618 user_id=8075767034 target_id=8421643331
+2026-06-11 11:56:01,704 | INFO | bot.handlers.group.management | chat_member:98 | NEW_MEMBER | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 11:56:10,874 | INFO | bot.handlers.group.admin_func | promote_demote:38 | PROMOTE | chat_id=-1003538569618 admin_id=8075767034 target_id=8421643331
+2026-06-11 11:56:10,883 | INFO | bot.handlers.group.management | chat_member:98 | NEW_ADMIN | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 12:26:31,234 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-11 12:26:58,058 | INFO | bot.handlers.group.admin_func | promote_demote:38 | DEMOTE | chat_id=-1003538569618 admin_id=8075767034 target_id=8421643331
+2026-06-11 12:26:58,065 | INFO | bot.handlers.group.management | chat_member:124 | ADMIN_TO_USER | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 12:27:07,527 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 12:27:07,547 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003538569618 user_id=8075767034 target_id=8421643331
+2026-06-11 12:27:16,847 | INFO | bot.handlers.group.management | chat_member:124 | KICKED_TO_USER | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 12:27:23,963 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003538569618 user 8075767034 missing username argument
+2026-06-11 12:27:29,084 | INFO | bot.handlers.group.admin_func | promote_demote:38 | PROMOTE | chat_id=-1003538569618 admin_id=8075767034 target_id=8421643331
+2026-06-11 12:27:29,091 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_ADMIN | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 12:30:08,138 | INFO | bot.handlers.group.management | chat_member:124 | ADMIN_TO_CREATOR | chat_id=-1003538569618 user_id=8421643331
+2026-06-11 12:30:08,234 | INFO | bot.handlers.group.management | chat_member:124 | CREATOR_TO_ADMIN | chat_id=-1003538569618 user_id=8075767034
+2026-06-11 12:35:21,866 | INFO | bot.handlers.group.management | chat_member:124 | ADMIN_TO_KICKED | chat_id=-1003538569618 user_id=8075767034
+2026-06-11 12:35:29,443 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_KICKED | chat_id=-1003538569618 AdminBot
+2026-06-11 12:36:03,755 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-5126141210 AdminBot
+2026-06-11 12:36:26,407 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -5126141210 user 8421643331 doesn't have enough rights
+2026-06-11 12:36:47,127 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-5126141210 AdminBot
+2026-06-11 12:37:08,466 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-5007466172 AdminBot
+2026-06-11 12:37:15,450 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-1003988705353 AdminBot
+2026-06-11 12:37:15,847 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003988705353 AdminBot
+2026-06-11 12:37:24,636 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003988705353 user 8075767034 write unknown user asdsdasdas23
+2026-06-11 12:37:38,128 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003988705353 user 8421643331 doesn't have enough rights
+2026-06-11 12:37:47,006 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003988705353 user_id=8421643331
+2026-06-11 12:37:47,015 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003988705353 user_id=8075767034 target_id=8421643331
+2026-06-11 13:25:07,738 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003988705353 user 8075767034 missing username argument
+2026-06-11 13:25:18,222 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_KICKED | chat_id=-1003988705353 AdminBot
+2026-06-11 13:25:21,662 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-5007466172 AdminBot
+2026-06-11 13:25:21,863 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-5007466172 AdminBot
+2026-06-11 13:25:37,608 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-5128802415 AdminBot
+2026-06-11 13:25:47,063 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-1003379600987 AdminBot
+2026-06-11 13:25:47,469 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003379600987 AdminBot
+2026-06-11 13:26:00,161 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 write unknown user asdsdasdas23
+2026-06-11 13:27:22,733 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 33, in ban
+    result = await services.bans_service.ban(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 45, in ban
+    if member.role in ("creator", "admin"):
+       ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'role'
+2026-06-11 13:27:36,668 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 95, in mute
+    result = await services.bans_service.mute(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 119, in mute
+    if member.role in ("creator", "admin"):
+       ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'role'
+2026-06-11 13:27:41,742 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 tried kickme but is admin
+2026-06-11 13:27:48,765 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 156, in kick
+    result = await services.bans_service.kick(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 227, in kick
+    if member.role in ("creator", "admin"):
+       ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'role'
+2026-06-11 13:27:58,128 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 156, in kick
+    result = await services.bans_service.kick(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 227, in kick
+    if member.role in ("creator", "admin"):
+       ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'role'
+2026-06-11 13:43:00,506 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 missing username argument
+2026-06-11 13:43:03,393 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 missing username argument
+2026-06-11 13:43:05,228 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 tried kickme but is admin
+2026-06-11 13:43:07,891 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 missing username argument
+2026-06-11 13:43:15,040 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 33, in ban
+    result = await services.bans_service.ban(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 45, in ban
+    if member.role in ("creator", "admin"):
+       ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'role'
+2026-06-11 13:44:24,956 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 missing username argument
+2026-06-11 13:44:30,485 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 missing username argument
+2026-06-11 13:44:33,622 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 tried kickme but is admin
+2026-06-11 13:44:39,045 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 missing username argument
+2026-06-11 13:44:44,001 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 write unknown user 8421643331
+2026-06-11 13:44:49,529 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 tried kickme but is admin
+2026-06-11 13:44:54,343 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 write unknown user 8421643331
+2026-06-11 13:45:00,898 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 write unknown user 8421643331
+2026-06-12 10:34:35,319 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_LEFT | chat_id=-1003379600987 AdminBot
+2026-06-12 10:35:11,980 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-1003379600987 AdminBot
+2026-06-12 10:36:25,396 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003379600987 AdminBot
+2026-06-12 10:37:14,135 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8075767034 missing username argument
+2026-06-12 10:37:30,196 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 user 8421643331 doesn't have enough rights
+2026-06-12 10:37:37,897 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003379600987 user_id=8421643331
+2026-06-12 10:37:37,916 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003379600987 user_id=8075767034 target_id=8421643331
+2026-06-12 10:37:58,069 | INFO | bot.handlers.group.management | chat_member:124 | LEFT_TO_USER | chat_id=-1003379600987 user_id=609517172
+2026-06-12 10:38:03,886 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003379600987 user_id=8075767034 target_id=609517172
+2026-06-12 10:38:03,978 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003379600987 user_id=609517172
+2026-06-12 10:38:10,349 | INFO | bot.handlers.group.management | chat_member:124 | KICKED_TO_USER | chat_id=-1003379600987 user_id=609517172
+2026-06-12 10:38:14,107 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003379600987 user_id=8075767034 target_id=609517172
+2026-06-12 10:38:14,125 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_RESTRICTED | chat_id=-1003379600987 user_id=609517172
+2026-06-12 10:38:14,342 | INFO | bot.handlers.group.management | chat_member:124 | unknown | chat_id=-1003379600987 user_id=609517172
+2026-06-12 10:38:54,803 | INFO | bot.handlers.group.management | chat_member:124 | KICKED_TO_USER | chat_id=-1003379600987 user_id=8421643331
+2026-06-12 10:39:12,821 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_RESTRICTED | chat_id=-1003379600987 AdminBot
+2026-06-12 10:39:19,770 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 AdminBot doesn't have enough rights
+2026-06-12 10:44:40,260 | INFO | bot.handlers.group.management | my_chat_member:233 | bot_unknown | chat_id=-1003379600987 AdminBot
+2026-06-12 10:45:04,552 | INFO | bot.handlers.group.management | my_chat_member:233 | bot_unknown | chat_id=-1003379600987 AdminBot
+2026-06-12 10:45:09,161 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003379600987 AdminBot doesn't have enough rights
+2026-06-12 10:45:18,693 | INFO | bot.handlers.group.management | my_chat_member:233 | bot_unknown | chat_id=-1003379600987 AdminBot
+2026-06-12 10:53:48,654 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_RESTRICTED_TO_LEFT | chat_id=-1003379600987 AdminBot
+2026-06-12 10:53:48,657 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-5128802415 AdminBot
+2026-06-12 10:54:05,112 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-4955098421 AdminBot
+2026-06-12 10:54:38,996 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -4955098421 AdminBot doesn't have enough rights
+2026-06-12 10:55:00,170 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-1003871459641 AdminBot
+2026-06-12 10:55:00,474 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003871459641 AdminBot
+2026-06-12 10:55:56,173 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_KICKED | chat_id=-1003871459641 AdminBot
+2026-06-12 10:56:02,762 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-4955098421 AdminBot
+2026-06-12 10:56:02,966 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-4955098421 AdminBot
+2026-06-12 10:56:15,464 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-5263230552 AdminBot
+2026-06-12 10:56:20,214 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-1003876532989 AdminBot
+2026-06-12 10:56:20,687 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003876532989 AdminBot
+2026-06-12 10:56:20,704 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003876532989 AdminBot
+2026-06-12 10:56:36,863 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003876532989 user_id=8421643331
+2026-06-12 10:56:36,865 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003876532989 user_id=8075767034 target_id=8421643331
+2026-06-12 10:57:26,850 | INFO | bot.handlers.group.management | chat_member:124 | KICKED_TO_USER | chat_id=-1003876532989 user_id=8421643331
+2026-06-12 10:57:44,649 | ERROR | bot.middleware.error_middleware | __call__:21 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 13, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 33, in ban
+    result = await services.bans_service.ban(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 72, in ban
+    await self.members_service.update_punishments(
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/core/members_service.py", line 154, in update_punishments
+    member.restricted_status = restricted_status
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'restricted_status'
+2026-06-12 10:57:44,654 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003876532989 user_id=8421643331
+2026-06-12 10:57:55,915 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_KICKED | chat_id=-1003876532989 AdminBot
+2026-06-12 10:57:58,675 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-5263230552 AdminBot
+2026-06-12 10:57:58,764 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_LEFT | chat_id=-5263230552 AdminBot
+2026-06-12 10:58:15,689 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-5265995678 AdminBot
+2026-06-12 10:58:21,816 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -5265995678 AdminBot doesn't have enough rights
+2026-06-12 10:58:27,556 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-1003902775882 AdminBot
+2026-06-12 10:58:27,893 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003902775882 AdminBot
+2026-06-12 10:58:32,466 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003902775882 user 8075767034 write unknown user asdsdasdas23
+2026-06-12 10:58:42,731 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003902775882 user_id=8075767034 target_id=8421643331
+2026-06-12 10:58:42,750 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 10:59:18,757 | INFO | bot.handlers.group.management | chat_member:124 | KICKED_TO_USER | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 10:59:56,511 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_KICKED | chat_id=-1003902775882 AdminBot
+2026-06-12 11:00:14,467 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_LEFT_TO_USER | chat_id=-1003902775882 AdminBot
+2026-06-12 11:00:29,711 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003902775882 AdminBot doesn't have enough rights
+2026-06-12 11:00:34,620 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_USER_TO_ADMIN | chat_id=-1003902775882 AdminBot
+2026-06-12 11:00:41,710 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003902775882 user 8075767034 write unknown user asdsdasdas23
+2026-06-12 11:00:45,323 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003902775882 user 8075767034 missing username argument
+2026-06-12 11:01:08,654 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003902775882 user 8421643331 doesn't have enough rights
+2026-06-12 11:01:14,981 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003902775882 user_id=8075767034 target_id=8421643331
+2026-06-12 11:01:15,001 | INFO | bot.handlers.group.management | chat_member:124 | USER_TO_KICKED | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 11:16:36,583 | INFO | bot.handlers.group.management | chat_member:124 | KICKED_TO_USER | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 11:16:48,761 | INFO | bot.handlers.group.management | my_chat_member:233 | BOT_ADMIN_TO_RESTRICTED | chat_id=-1003902775882 AdminBot
+2026-06-12 11:16:55,825 | WARNING | bot.middleware.error_middleware | __call__:16 | in chat -1003902775882 AdminBot doesn't have enough rights
+2026-06-12 11:18:02,076 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003902775882 AdminBot doesn't have enough rights
+2026-06-12 11:22:43,782 | INFO | bot.handlers.group.management | my_chat_member:243 | BOT_RESTRICTED_TO_ADMIN | chat_id=-1003902775882 AdminBot
+2026-06-12 11:22:49,401 | INFO | bot.handlers.group.management | chat_member:134 | LEFT_TO_USER | chat_id=-1003902775882 user_id=609517172
+2026-06-12 11:22:55,980 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003902775882 user_id=8075767034 target_id=609517172
+2026-06-12 11:22:55,985 | INFO | bot.handlers.group.management | chat_member:134 | USER_TO_RESTRICTED | chat_id=-1003902775882 user_id=609517172
+2026-06-12 11:23:31,492 | INFO | bot.handlers.group.management | chat_member:125 | unknown | chat_id=-1003902775882 user_id=609517172 old=restricted new=restricted
+2026-06-12 11:26:40,871 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003902775882 user_id=8075767034 target_id=8421643331
+2026-06-12 11:26:40,881 | INFO | bot.handlers.group.management | chat_member:134 | USER_TO_RESTRICTED | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 11:26:53,940 | INFO | bot.handlers.group.management | chat_member:125 | unknown | chat_id=-1003902775882 user_id=8421643331 old=restricted new=restricted
+2026-06-12 11:27:15,942 | INFO | bot.handlers.group.management | chat_member:125 | unknown | chat_id=-1003902775882 user_id=8421643331 old=restricted new=restricted
+2026-06-12 11:27:38,039 | INFO | bot.handlers.group.management | chat_member:134 | RESTRICTED_TO_KICKED | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 11:27:38,049 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003902775882 user_id=8075767034 target_id=8421643331
+2026-06-12 11:27:50,239 | INFO | bot.handlers.group.management | chat_member:125 | unknown | chat_id=-1003902775882 user_id=609517172 old=restricted new=restricted
+2026-06-12 11:28:19,864 | INFO | bot.handlers.group.management | chat_member:134 | KICKED_TO_USER | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 11:28:24,819 | INFO | bot.handlers.group.management | chat_member:134 | USER_TO_LEFT | chat_id=-1003902775882 user_id=8421643331
+2026-06-12 11:31:21,412 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003902775882 user_id=8075767034 target_id=609517172
+2026-06-12 11:31:21,414 | INFO | bot.handlers.group.management | chat_member:125 | unknown | chat_id=-1003902775882 user_id=609517172 old=restricted new=restricted
+2026-06-12 11:31:21,611 | INFO | bot.handlers.group.management | chat_member:125 | unknown | chat_id=-1003902775882 user_id=609517172 old=restricted new=restricted
+2026-06-12 11:43:59,508 | INFO | bot.handlers.group.management | my_chat_member:238 | BOT_ADMIN_TO_KICKED | chat_id=-1003902775882 AdminBot
+2026-06-12 11:43:59,512 | INFO | bot.handlers.group.management | my_chat_member:238 | BOT_USER_TO_LEFT | chat_id=-5265995678 AdminBot
+2026-06-12 11:45:44,122 | INFO | bot.handlers.group.management | my_chat_member:238 | BOT_LEFT_TO_USER | chat_id=-5181130662 AdminBot
+2026-06-12 11:45:53,142 | INFO | bot.handlers.group.management | my_chat_member:238 | BOT_LEFT_TO_USER | chat_id=-1003912335869 AdminBot
+2026-06-12 11:45:53,551 | INFO | bot.handlers.group.management | my_chat_member:238 | BOT_USER_TO_ADMIN | chat_id=-1003912335869 AdminBot
+2026-06-12 11:46:04,019 | INFO | bot.handlers.group.management | chat_member:129 | LEFT_TO_USER | chat_id=-1003912335869 user_id=609517172
+2026-06-12 11:46:11,141 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003912335869 user_id=8075767034 target_id=609517172
+2026-06-12 11:46:11,164 | INFO | bot.handlers.group.management | chat_member:129 | USER_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 11:46:11,257 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 11:50:10,783 | INFO | bot.handlers.group.bans_func | unmute:136 | UNMUTE | chat_id=-1003912335869 user_id=8075767034 target_id=609517172
+2026-06-12 11:50:10,815 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 11:50:31,696 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8075767034 write unknown user asdsdasdas23
+2026-06-12 11:50:47,847 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8075767034 tried to unban not banned user 609517172
+2026-06-12 11:51:13,044 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8075767034 tried to unmute not muted user 609517172
+2026-06-12 11:51:23,252 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003912335869 user_id=8075767034 target_id=609517172
+2026-06-12 11:51:23,254 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 11:52:19,079 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8421643331 doesn't have enough rights
+2026-06-12 11:52:33,539 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003912335869 user_id=8075767034 target_id=8421643331
+2026-06-12 11:52:33,541 | INFO | bot.handlers.group.management | chat_member:129 | USER_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 11:52:39,752 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 11:53:07,221 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 11:53:28,498 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_KICKED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 11:53:33,037 | INFO | bot.handlers.group.management | chat_member:129 | KICKED_TO_USER | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 11:53:41,262 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8421643331 doesn't have enough rights
+2026-06-12 11:53:49,494 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003912335869 user_id=8075767034 target_id=8421643331
+2026-06-12 11:53:49,496 | INFO | bot.handlers.group.management | chat_member:129 | USER_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 11:53:55,925 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 11:54:05,294 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:22:52,643 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8075767034 missing username argument
+2026-06-12 16:22:58,810 | INFO | bot.handlers.group.management | my_chat_member:240 | BOT_ADMIN_TO_RESTRICTED | chat_id=-1003912335869 AdminBot
+2026-06-12 16:23:18,314 | INFO | bot.handlers.group.management | my_chat_member:240 | BOT_RESTRICTED_TO_ADMIN | chat_id=-1003912335869 AdminBot
+2026-06-12 16:23:23,946 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:23:40,849 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_ADMIN | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:24:07,672 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003912335869 user_id=8075767034 target_id=609517172
+2026-06-12 16:24:07,772 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:24:07,887 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:24:32,603 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:24:55,462 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8075767034 tried to mute admin 8421643331
+2026-06-12 16:25:19,342 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003912335869 user 8075767034 tried to mute admin 8421643331
+2026-06-12 16:25:30,410 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003912335869 user_id=8075767034 target_id=609517172
+2026-06-12 16:25:30,501 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_KICKED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:26:19,449 | INFO | bot.handlers.group.management | chat_member:129 | ADMIN_TO_USER | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:26:25,278 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003912335869 user_id=8075767034 target_id=8421643331
+2026-06-12 16:26:25,280 | INFO | bot.handlers.group.management | chat_member:129 | USER_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:26:49,332 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:27:14,027 | INFO | bot.handlers.group.management | chat_member:129 | KICKED_TO_USER | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:27:25,406 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003912335869 user_id=8075767034 target_id=609517172
+2026-06-12 16:27:25,411 | INFO | bot.handlers.group.management | chat_member:129 | USER_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:27:30,612 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=609517172
+2026-06-12 16:30:12,498 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_RESTRICTED | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:30:19,055 | INFO | bot.handlers.group.management | chat_member:129 | RESTRICTED_TO_ADMIN | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:30:22,286 | INFO | bot.handlers.group.management | chat_member:129 | unknown | chat_id=-1003912335869 user_id=8421643331
+2026-06-12 16:34:54,595 | INFO | bot.handlers.group.management | my_chat_member:243 | BOT_ADMIN_TO_LEFT | chat_id=-1003912335869 AdminBot
+2026-06-12 16:34:58,203 | INFO | bot.handlers.group.management | my_chat_member:243 | BOT_USER_TO_LEFT | chat_id=-5181130662 AdminBot
+2026-06-12 16:34:58,296 | INFO | bot.handlers.group.management | my_chat_member:243 | BOT_USER_TO_LEFT | chat_id=-5181130662 AdminBot
+2026-06-12 16:46:52,080 | INFO | bot.handlers.group.management | my_chat_member:184 | LEFT_TO_USER | chat_id=-5545449390 AdminBot
+2026-06-12 16:47:21,924 | INFO | bot.handlers.group.management | my_chat_member:184 | LEFT_TO_USER | chat_id=-1004432273073 AdminBot
+2026-06-12 16:47:22,327 | INFO | bot.handlers.group.management | my_chat_member:184 | USER_TO_ADMIN | chat_id=-1004432273073 AdminBot
+2026-06-12 16:47:22,529 | INFO | bot.handlers.group.management | my_chat_member:184 | USER_TO_ADMIN | chat_id=-1004432273073 AdminBot
+2026-06-12 16:49:05,954 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1004432273073 user 8075767034 missing username argument
+2026-06-12 16:49:38,134 | INFO | bot.handlers.group.management | chat_member:114 | USER_TO_KICKED | chat_id=-1004432273073 user_id=8421643331
+2026-06-12 16:49:38,147 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1004432273073 user_id=8075767034 target_id=8421643331
+2026-06-12 16:50:29,828 | INFO | bot.handlers.group.management | chat_member:114 | KICKED_TO_USER | chat_id=-1004432273073 user_id=8421643331
+2026-06-12 16:50:39,540 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1004432273073 user 8075767034 write unknown user asdsdasdas23
+2026-06-12 16:50:49,033 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1004432273073 user 8421643331 doesn't have enough rights
+2026-06-12 16:51:08,443 | INFO | bot.handlers.group.management | chat_member:114 | USER_TO_KICKED | chat_id=-1004432273073 user_id=8421643331
+2026-06-12 16:51:08,465 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1004432273073 user_id=8075767034 target_id=8421643331
+2026-06-12 16:53:47,976 | INFO | bot.handlers.group.management | my_chat_member:184 | LEFT_TO_USER | chat_id=-5458163784 AdminBot
+2026-06-12 16:54:04,044 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -5458163784 AdminBot doesn't have enough rights
+2026-06-12 16:54:10,246 | INFO | bot.handlers.group.management | my_chat_member:184 | LEFT_TO_USER | chat_id=-1003921072637 AdminBot
+2026-06-12 16:54:10,428 | INFO | bot.handlers.group.management | my_chat_member:184 | USER_TO_ADMIN | chat_id=-1003921072637 AdminBot
+2026-06-12 16:54:22,171 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003921072637 user 8075767034 write unknown user asdsdasdas23
+2026-06-12 16:55:01,087 | INFO | bot.handlers.group.management | chat_member:114 | USER_TO_KICKED | chat_id=-1003921072637 user_id=8421643331
+2026-06-12 16:55:01,089 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003921072637 user_id=8075767034 target_id=8421643331
+2026-06-12 16:56:14,200 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_ADMIN | chat_id=-1003921072637 AdminBot
+2026-06-12 16:56:43,362 | INFO | bot.handlers.group.management | chat_member:115 | KICKED_TO_USER | chat_id=-1003921072637 user_id=8421643331
+2026-06-12 16:56:48,540 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_KICKED | chat_id=-1003921072637 user_id=8421643331
+2026-06-12 16:56:48,543 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1003921072637 user_id=8075767034 target_id=8421643331
+2026-06-12 16:58:13,778 | INFO | bot.handlers.group.management | chat_member:115 | LEFT_TO_USER | chat_id=-1003921072637 user_id=609517172
+2026-06-12 16:58:19,350 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1003921072637 user_id=8075767034 target_id=609517172
+2026-06-12 16:58:19,355 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_RESTRICTED | chat_id=-1003921072637 user_id=609517172
+2026-06-12 16:58:25,179 | INFO | bot.handlers.group.management | chat_member:115 | RESTRICTED_TO_LEFT | chat_id=-1003921072637 user_id=609517172
+2026-06-12 17:00:07,466 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_ADMIN | chat_id=-1003921072637 AdminBot
+2026-06-12 17:16:53,693 | WARNING | bot.middleware.error_middleware | __call__:18 | in chat -1003921072637 user 8075767034 missing username argument
+2026-06-12 17:18:17,710 | INFO | bot.handlers.group.management | my_chat_member:222 | BOT_ADMIN_TO_ADMIN | chat_id=-1003921072637 
+2026-06-12 17:18:27,644 | INFO | bot.handlers.group.management | my_chat_member:222 | BOT_ADMIN_TO_RESTRICTED | chat_id=-1003921072637 
+2026-06-12 17:21:54,026 | INFO | bot.handlers.group.management | my_chat_member:225 | BOT_RESTRICTED_TO_ADMIN | chat_id=-1003921072637 
+2026-06-12 17:22:05,034 | INFO | bot.handlers.group.management | my_chat_member:225 | BOT_ADMIN_TO_ADMIN | chat_id=-1003921072637 
+2026-06-12 17:28:11,374 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_ADMIN | chat_id=-1003921072637
+2026-06-12 21:10:53,492 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_KICKED | chat_id=-1004432273073 user_id=8421643331
+2026-06-12 21:10:53,508 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_USER_TO_LEFT | chat_id=-5545449390
+2026-06-12 21:10:53,509 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_LEFT | chat_id=-1004432273073
+2026-06-12 21:10:53,510 | WARNING | bot.middleware.error_middleware | __call__:18 | BOT_HAS_NO_RIGHTS | chat_id=-1004432273073
+2026-06-12 21:10:53,510 | WARNING | bot.middleware.error_middleware | __call__:18 | BOT_HAS_NO_RIGHTS | chat_id=-1004432273073
+2026-06-12 21:10:53,514 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_USER_TO_LEFT | chat_id=-5545449390
+2026-06-12 21:10:53,514 | INFO | bot.handlers.group.management | chat_member:115 | KICKED_TO_USER | chat_id=-1004432273073 user_id=8421643331
+2026-06-12 21:10:53,515 | INFO | bot.handlers.group.management | chat_member:115 | LEFT_TO_USER | chat_id=-1004432273073 user_id=162726413
+2026-06-12 21:11:14,476 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_LEFT_TO_USER | chat_id=-1004436422958
+2026-06-12 21:11:40,851 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_USER_TO_ADMIN | chat_id=-1004436422958
+2026-06-12 21:11:45,326 | INFO | bot.handlers.group.management | chat_member:115 | KICKED_TO_USER | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:11:52,083 | INFO | bot.handlers.group.bans_func | mute:111 | MUTE | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:11:52,093 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_RESTRICTED | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:12:20,519 | INFO | bot.handlers.group.management | chat_member:115 | RESTRICTED_TO_LEFT | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:12:57,418 | INFO | bot.handlers.group.management | chat_member:115 | LEFT_TO_RESTRICTED | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:13:19,771 | INFO | bot.handlers.group.management | chat_member:115 | RESTRICTED_TO_KICKED | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:13:19,893 | INFO | bot.handlers.group.bans_func | kick:171 | KICK | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:13:19,963 | INFO | bot.handlers.group.management | chat_member:115 | KICKED_TO_LEFT | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:14:03,281 | INFO | bot.handlers.group.management | chat_member:115 | LEFT_TO_USER | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:14:13,058 | INFO | bot.handlers.group.bans_func | ban:49 | BAN | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:14:13,060 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_KICKED | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:15:23,302 | INFO | bot.handlers.group.management | chat_member:115 | KICKED_TO_LEFT | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:45:30,731 | WARNING | bot.middleware.error_middleware | __call__:18 | NO_USER_IN_ARGS | chat_id=-1004436422958 user_id=8075767034
+2026-06-12 21:45:39,444 | WARNING | bot.middleware.error_middleware | __call__:18 | KICKME_ADMIN | chat_id=-1004436422958 user_id=8075767034
+2026-06-12 21:45:41,729 | WARNING | bot.middleware.error_middleware | __call__:18 | NO_USER_IN_ARGS | chat_id=-1004436422958 user_id=8075767034
+2026-06-12 21:45:48,456 | WARNING | bot.middleware.error_middleware | __call__:18 | CANT_BAN_ADMIN | chat_id=-1004436422958 user_id=8075767034 target_id=8075767034
+2026-06-12 21:45:53,678 | INFO | bot.handlers.group.management | chat_member:115 | LEFT_TO_USER | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:45:58,108 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_ADMIN | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:46:02,719 | ERROR | bot.middleware.error_middleware | __call__:26 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/admin_service.py", line 58, in change_admin_role
+    await self.telegram_service.promote_chat_member(
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/core/telegram_service.py", line 160, in promote_chat_member
+    await self.bot.promote_chat_member(
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 2082, in promote_chat_member
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/aiohttp.py", line 177, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 121, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: CHAT_ADMIN_REQUIRED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 15, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/admin_func.py", line 30, in promote_demote
+    result = await services.admin_service.change_admin_role(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/admin_service.py", line 65, in change_admin_role
+    raise CantModerateAssignedNotByBotAdminsError(user_id)
+                                                  ^^^^^^^
+NameError: name 'user_id' is not defined
+2026-06-12 21:47:10,211 | WARNING | bot.middleware.error_middleware | __call__:18 | CANT_MODERATE_ASSIGNED_NOT_BY_BOT_ADMINS | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:47:23,724 | WARNING | bot.middleware.error_middleware | __call__:18 | INVALID_USER_OR_ID | chat_id=-1004436422958 user_id=8075767034
+2026-06-12 21:47:28,806 | WARNING | bot.middleware.error_middleware | __call__:18 | USER_NOT_FOUND | chat_id=-1004436422958 user_id=8075767034 target_id=123
+2026-06-12 21:47:33,719 | WARNING | bot.middleware.error_middleware | __call__:18 | USER_NOT_FOUND | chat_id=-1004436422958 user_id=8075767034 target_id=123
+2026-06-12 21:47:40,275 | WARNING | bot.middleware.error_middleware | __call__:18 | TOO_MANY_ARGS | chat_id=-1004436422958 user_id=8075767034
+2026-06-12 21:47:48,160 | WARNING | bot.middleware.error_middleware | __call__:18 | CANT_BAN_ADMIN | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:47:54,230 | WARNING | bot.middleware.error_middleware | __call__:18 | CANT_MODERATE_ASSIGNED_NOT_BY_BOT_ADMINS | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:48:14,068 | INFO | bot.handlers.group.management | chat_member:115 | ADMIN_TO_ADMIN | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:48:17,716 | INFO | bot.handlers.group.management | chat_member:115 | ADMIN_TO_ADMIN | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:48:24,931 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_ADMIN | chat_id=-1004436422958
+2026-06-12 21:48:34,702 | WARNING | bot.middleware.error_middleware | __call__:18 | CANT_BAN_ADMIN | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:48:42,009 | INFO | bot.handlers.group.management | chat_member:115 | ADMIN_TO_USER | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:48:45,092 | ERROR | bot.middleware.error_middleware | __call__:26 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 15, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 33, in ban
+    result = await services.bans_service.ban(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 54, in ban
+    await self.telegram_service.delete_message(
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/core/telegram_service.py", line 189, in delete_message
+    await self.bot.delete_message(chat_id, message_id)
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 1192, in delete_message
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/aiohttp.py", line 177, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 121, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: message can't be deleted
+2026-06-12 21:50:55,281 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_ADMIN | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:55:01,356 | INFO | bot.handlers.group.admin_func | adminlist:58 | ADMINLIST | chat_id=-1004436422958 admin_id=8075767034
+2026-06-12 21:55:06,432 | WARNING | bot.middleware.error_middleware | __call__:18 | NO_USER_IN_ARGS | chat_id=-1004436422958 user_id=8075767034
+2026-06-12 21:55:19,436 | WARNING | bot.middleware.error_middleware | __call__:18 | CANT_BAN_ADMIN | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:55:26,213 | INFO | bot.handlers.group.management | chat_member:115 | ADMIN_TO_USER | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:55:33,049 | ERROR | bot.middleware.error_middleware | __call__:26 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 15, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 33, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/handlers/group/bans_func.py", line 33, in ban
+    result = await services.bans_service.ban(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/bans_service.py", line 55, in ban
+    await self.telegram_service.delete_message(
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/services/services_list/core/telegram_service.py", line 189, in delete_message
+    await self.bot.delete_message(chat_id, message_id)
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 1192, in delete_message
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/bot.py", line 493, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/aiohttp.py", line 177, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/.venv/lib/python3.12/site-packages/aiogram/client/session/base.py", line 121, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: message can't be deleted
+2026-06-12 21:56:43,917 | WARNING | bot.middleware.error_middleware | __call__:18 | BOT_HAS_NO_RIGHTS | chat_id=-1004436422958
+2026-06-12 21:56:53,741 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_ADMIN | chat_id=-1004436422958
+2026-06-12 21:56:58,007 | INFO | bot.handlers.group.bans_func | ban:49 | DBAN | chat_id=-1004436422958 user_id=8075767034 target_id=8421643331
+2026-06-12 21:56:58,026 | INFO | bot.handlers.group.management | chat_member:115 | USER_TO_KICKED | chat_id=-1004436422958 user_id=8421643331
+2026-06-12 21:57:32,252 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_KICKED | chat_id=-1004436422958
+2026-06-12 22:04:46,527 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_ADMIN_TO_KICKED | chat_id=-1003921072637
+2026-06-12 22:05:02,418 | ERROR | bot.middleware.error_middleware | __call__:26 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 15, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 23, in __call__
+    adminerror = chat_settings.admin["adminerror"]
+                 ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'admin'
+2026-06-12 22:05:21,332 | ERROR | bot.middleware.error_middleware | __call__:26 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 15, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 23, in __call__
+    adminerror = chat_settings.admin["adminerror"]
+                 ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'admin'
+2026-06-12 22:05:28,709 | ERROR | bot.middleware.error_middleware | __call__:26 | Unhandled exception
+Traceback (most recent call last):
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/error_middleware.py", line 15, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/novasweet/Python/projects/bots/AdminBot/bot/middleware/admin_middleware.py", line 23, in __call__
+    adminerror = chat_settings.admin["adminerror"]
+                 ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'admin'
+2026-06-12 22:05:55,573 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_USER_TO_LEFT | chat_id=-1003921072637
+2026-06-12 22:06:06,401 | INFO | bot.handlers.group.management | my_chat_member:186 | BOT_LEFT_TO_USER | chat_id=-1003921072637
+2026-06-12 22:06:12,334 | WARNING | bot.middleware.error_middleware | __call__:18 | BOT_HAS_NO_RIGHTS | chat_id=-1003921072637

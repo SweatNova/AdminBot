@@ -100,12 +100,16 @@ class TelegramService:
 			for right in ADMIN_RIGHTS
 		}
 	@staticmethod
-	def status_to_role_db(status: str) -> str:
+	def status_to_role_db(status: str, is_member: bool | None = None) -> str:
+		if status == "restricted" and not is_member:
+			return "left"
+
 		mapping = {
 			"creator": "creator",
 			"administrator": "admin",
 			"member": "user",
 			"kicked": "kicked",
+			"restricted": "restricted",
 			"left": "left"
 		}
 		return mapping.get(status, "user")

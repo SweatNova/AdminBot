@@ -56,4 +56,4 @@ class Scheduler:
 					)
 				except Exception as e:
 					print(f"Scheduler error {user.chat_id}:{user.user_id}: {e}")
-			await asyncio.sleep(30)
+			await asyncio.sleep(60)

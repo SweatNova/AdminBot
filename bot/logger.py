@@ -45,3 +45,18 @@ def setup_logger():
 
 	root_logger.addHandler(console_handler)
 	root_logger.addHandler(file_handler)
+
+	noisy_loggers = [
+		"aiogram",
+		"aiogram.event",
+		"aiogram.dispatcher",
+		"aiogram.client",
+		"aiohttp",
+		"asyncio",
+		"httpx",
+		"telegram"
+	]
+
+	for name in noisy_loggers:
+		logging.getLogger(name).setLevel(logging.WARNING)
+		logging.getLogger(name).propagate = False

@@ -36,6 +36,9 @@ class AdminService:
 			"can_promote_members": is_promote
 		}
 		bot = await self.bot_chats_info_service.get_bot(chat_id)
+		if not bot.bot_admin_permissions["can_promote_members"]:
+			raise AdminBotHasNoRightsError
+
 		missing_rights = [
 			right
 			for right, required in rights.items()
@@ -52,7 +55,7 @@ class AdminService:
 			raise CantChangeBotsRightsError
 
 		role = "admin" if is_promote else "user"
-		action = "повышен" if is_promote else "понижен"
+		action = "promoted" if is_promote else "demoted"
 
 		try:
 			await self.telegram_service.promote_chat_member(
@@ -64,7 +67,7 @@ class AdminService:
 			if "CHAT_ADMIN_REQUIRED" in str(t_e):
 				raise CantModerateAssignedNotByBotAdminsError(user_id)
 
-		return f"✅ Пользователь {username} {action} до {role}"
+		return f"✅ User {username} {action} to {role}"
 
 	async def get_chat_administrators(self, chat_id: int) -> list[dict]:
 		return await self.telegram_service.get_chat_administrators(chat_id)

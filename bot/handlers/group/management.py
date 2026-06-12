@@ -6,8 +6,46 @@ from bot.filters import ChatTypeFilter
 
 from bot.services.services_container import ServicesContainer
 
+import logging
+
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
+
+logger = logging.getLogger(__name__)
+
+def get_event_type(
+	old_status: str,
+	new_status: str,
+	old_is_member: bool | None = None,
+	new_is_member: bool | None = None,
+	is_adminbot: bool = False
+) -> str:
+	prefix = "BOT_" if is_adminbot else ""
+
+	def normalize(status: str, is_member: bool | None) -> str:
+		if status == "restricted" and is_member is False:
+			return "left"
+		return status
+
+	old_status = normalize(old_status, old_is_member)
+	new_status = normalize(new_status, new_is_member)
+
+	role_map = {
+		"member": "USER",
+		"administrator": "ADMIN",
+		"creator": "CREATOR",
+		"restricted": "RESTRICTED",
+		"left": "LEFT",
+		"kicked": "KICKED",
+	}
+
+	old_role = role_map.get(old_status)
+	new_role = role_map.get(new_status)
+
+	if not old_role or not new_role:
+		return f"{prefix}UNKNOWN"
+
+	return f"{prefix}{old_role}_TO_{new_role}"
 
 @router.chat_member()
 async def chat_member(event: ChatMemberUpdated, services: ServicesContainer):
@@ -23,7 +61,10 @@ async def chat_member(event: ChatMemberUpdated, services: ServicesContainer):
 	old_status = event.old_chat_member.status
 	new_status = event.new_chat_member.status
 
-	role = services.telegram_service.status_to_role_db(new_status)
+	role = services.telegram_service.status_to_role_db(
+		new_status,
+		getattr(event.new_chat_member, "is_member", None)
+	)
 	
 	if new_status == "creator":
 		admin_permissions = {"all": True}
@@ -53,15 +94,30 @@ async def chat_member(event: ChatMemberUpdated, services: ServicesContainer):
 		user_permissions,
 		admin_permissions
 	)
+
 	if old_status in ("left", "kicked") and \
-	   new_status in ("member", "administrator", "creator") or \
+	   new_status in ("member", "administrator") or \
 	   old_status in ("restricted", "member") and \
 	   new_status in ("administrator", "creator"):
-			await services.members_service.update_punishments(
-				chat_id,
-				user_id,
-				None, None, None, None
-			)
+		await services.members_service.update_punishments(
+			chat_id,
+			user_id,
+			None, None, None, None
+		)
+	
+	event_type = get_event_type(
+		old_status,
+		new_status,
+		getattr(event.old_chat_member, "is_member", None),
+		getattr(event.new_chat_member, "is_member", None),
+		False
+	)
+	logger.info(
+		"%s | chat_id=%s user_id=%s",
+		event_type,
+		chat_id,
+		user_id
+	)
 
 async def when_bot_added(chat_id: int, services: ServicesContainer):
 	admins = await services.telegram_service.get_chat_administrators(chat_id)
@@ -88,7 +144,10 @@ async def my_chat_member(event: ChatMemberUpdated, services: ServicesContainer):
 
 	new_status = event.new_chat_member.status
 	old_status = event.old_chat_member.status
-	role = services.telegram_service.status_to_role_db(new_status)
+	role = services.telegram_service.status_to_role_db(
+		new_status,
+		getattr(event.new_chat_member, "is_member", None)
+	)
 
 	admin_permissions = (
 		services.telegram_service.extract_admin_permissions(
@@ -116,3 +175,16 @@ async def my_chat_member(event: ChatMemberUpdated, services: ServicesContainer):
 	if old_status in ("left", "kicked") and \
 	   new_status in ("member", "administrator", "creator"):
 		await when_bot_added(chat_id, services)
+
+	event_type = get_event_type(
+		old_status,
+		new_status,
+		getattr(event.old_chat_member, "is_member", None),
+		getattr(event.new_chat_member, "is_member", None),
+		True
+	)
+	logger.info(
+		"%s | chat_id=%s",
+		event_type,
+		chat_id
+	)

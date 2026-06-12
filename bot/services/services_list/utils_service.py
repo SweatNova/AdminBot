@@ -69,8 +69,8 @@ class UtilsService:
 					raise InvalidTimeArgumentError
 			user = message.reply_to_message.from_user
 			user_id = user.id
-			name = f"@{user.username}" if user.username else user.full_name
-			return user_id, name
+			username = f"@{user.username}" if user.username else user.full_name
+			return user_id, username
 
 		if len(args) < 2:
 			raise NoUserInArgumentsError
@@ -80,12 +80,15 @@ class UtilsService:
 
 		user_id = await self.get_id(message.chat.id, args[1])
 
-		member = await self.telegram_service.get_chat_member(
-			message.chat.id,
-			user_id
-		)
-		if not member:
-			raise UserNotFoundError(user_id)
+		try:
+			member = await self.telegram_service.get_chat_member(
+				message.chat.id,
+				user_id
+			)
+		except TelegramBadRequest as e:
+			if "PARTICIPANT_ID_INVALID" in str(e):
+				raise UserNotFoundError(user_id)
+			raise
 
 		name = f"@{member.user.username}" if member.user.username \
 										  else member.user.full_name

@@ -6,6 +6,7 @@ from aiogram.exceptions import TelegramBadRequest
 from datetime import datetime
 
 from bot.exceptions import (
+	UserNotFoundError,
 	AdminBotHasNoRightsError,
 	CantBanAdminError,
 	NeedReplyToMessageError,
@@ -38,12 +39,15 @@ class BansService:
 		until_date: datetime | None = None
 	) -> str:
 		bot = await self.bot_chats_info_service.get_bot(chat_id)
-		if not bot.bot_admin_permissions["can_restrict_members"]:
+		if not bot.bot_admin_permissions["can_restrict_members"] or \
+		   not bot.bot_admin_permissions["can_delete_messages"]:
 			raise AdminBotHasNoRightsError
 
 		member = await self.members_service.get_member(chat_id, user_id)
+		if member is None:
+			raise UserNotFoundError(user_id)
 		if member.role in ("creator", "admin"):
-			raise CantBanAdminError(member.user_id)
+			raise CantBanAdminError(user_id)
 
 		if delete:
 			if not message.reply_to_message:
@@ -74,16 +78,23 @@ class BansService:
 			datetime.utcnow(),
 			until_date
 		)
-		return f"✅ Пользователь {username} забанен"
+		return f"✅ User {username} has been banned"
 
-	async def unban(self, chat_id: int, user_id: int, username: str) -> str:
+	async def unban(
+		self,
+		chat_id: int,
+		user_id: int,
+		username: str
+	) -> str:
 		bot = await self.bot_chats_info_service.get_bot(chat_id)
 		if not bot.bot_admin_permissions["can_restrict_members"]:
 			raise AdminBotHasNoRightsError
 
 		member = await self.members_service.get_member(chat_id, user_id)
+		if member is None:
+			raise UserNotFoundError(user_id)
 		if member.restricted_status != "banned":
-			raise UserNotBannedError(member.user_id)
+			raise UserNotBannedError(user_id)
 
 		await self.telegram_service.unban_chat_member(chat_id, user_id)
 		await self.members_service.update_punishments(
@@ -94,7 +105,7 @@ class BansService:
 			None,
 			None
 		)
-		return f"✅ Пользователь {username} разбанен"
+		return f"✅ User {username} has been unbanned"
 
 	async def mute(
 		self,
@@ -107,12 +118,15 @@ class BansService:
 		until_date: datetime | None = None
 	) -> str:
 		bot = await self.bot_chats_info_service.get_bot(chat_id)
-		if not bot.bot_admin_permissions["can_restrict_members"]:
+		if not bot.bot_admin_permissions["can_restrict_members"] or \
+		   not bot.bot_admin_permissions["can_delete_messages"]:
 			raise AdminBotHasNoRightsError
 
 		member = await self.members_service.get_member(chat_id, user_id)
+		if member is None:
+			raise UserNotFoundError(user_id)
 		if member.role in ("creator", "admin"):
-			raise CantMuteAdminError(member.user_id)
+			raise CantMuteAdminError(user_id)
 
 		if delete:
 			if not message.reply_to_message:
@@ -159,16 +173,23 @@ class BansService:
 			datetime.utcnow(),
 			until_date
 		)
-		return f"✅ Пользователь {username} замучен"
+		return f"✅ User {username} has been muted"
 
-	async def unmute(self, chat_id: int, user_id: int, username: str) -> str:
+	async def unmute(
+		self,
+		chat_id: int,
+		user_id: int,
+		username: str
+	) -> str:
 		bot = await self.bot_chats_info_service.get_bot(chat_id)
 		if not bot.bot_admin_permissions["can_restrict_members"]:
 			raise AdminBotHasNoRightsError
 
 		member = await self.members_service.get_member(chat_id, user_id)
+		if member is None:
+			raise UserNotFoundError(user_id)
 		if member.restricted_status != "muted":
-			raise UserNotMutedError(member.user_id)
+			raise UserNotMutedError(user_id)
 
 		await self.telegram_service.restrict_chat_member(
 			chat_id=chat_id,
@@ -198,7 +219,7 @@ class BansService:
 			None,
 			None
 		)		
-		return f"✅ Пользователь {username} размучен"
+		return f"✅ User {username} has been unmuted"
 
 	async def kick(
 		self,
@@ -210,12 +231,15 @@ class BansService:
 		secret: bool = False
 	) -> str:
 		bot = await self.bot_chats_info_service.get_bot(chat_id)
-		if not bot.bot_admin_permissions["can_restrict_members"]:
+		if not bot.bot_admin_permissions["can_restrict_members"] or \
+		   not bot.bot_admin_permissions["can_delete_messages"]:
 			raise AdminBotHasNoRightsError
 
 		member = await self.members_service.get_member(chat_id, user_id)
+		if member is None:
+			raise UserNotFoundError(user_id)
 		if member.role in ("creator", "admin"):
-			raise CantMuteAdminError(member.user_id)
+			raise CantMuteAdminError(user_id)
 
 		if delete:
 			if not message.reply_to_message:
@@ -233,7 +257,7 @@ class BansService:
 				chat_id,
 				message.message_id
 			)
-		return f"✅ Пользователь {username} кикнут"
+		return f"✅ User {username} has been kicked"
 
 	async def kickme(self, chat_id, user_id, username) -> str:
 		bot = await self.bot_chats_info_service.get_bot(chat_id)
@@ -246,4 +270,4 @@ class BansService:
 
 		await self.telegram_service.ban_chat_member(chat_id, user_id)
 		await self.telegram_service.unban_chat_member(chat_id, user_id)
-		return f"✅ Пользователь {username} вышел из чата"
+		return f"✅ User {username} left the chat"

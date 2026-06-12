@@ -18,14 +18,14 @@ from bot.handlers.group.basic import set_commands
 
 from bot.scheduler import Scheduler
 
-dp = Dispatcher()
-dp.update.middleware(UserSyncMiddleware())
-
 async def main():
 	bot_config = get_config(model=BotConfig, root_key="bot")
 	bot = Bot(token=bot_config.token.get_secret_value())
 	await init_db()
 	services_container = ServicesContainer(bot)
+	setup_logger()
+	dp = Dispatcher()
+	dp.update.middleware(UserSyncMiddleware())
 	dp["services"] = services_container
 	for router in get_routers():
 		dp.include_router(router)
@@ -35,5 +35,4 @@ async def main():
 	await dp.start_polling(bot)
 
 if __name__ == "__main__":
-	setup_logger()
 	asyncio.run(main())
