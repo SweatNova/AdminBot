@@ -2,7 +2,7 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 
-from bot.middleware import UserSyncMiddleware
+from bot.middleware import UserSyncMiddleware, ResponseTimeMiddleware
 
 from bot.logger import setup_logger
 
@@ -18,14 +18,21 @@ from bot.handlers.group.basic import set_commands
 
 from bot.scheduler import Scheduler
 
+import logging
+
 async def main():
 	bot_config = get_config(model=BotConfig, root_key="bot")
 	bot = Bot(token=bot_config.token.get_secret_value())
 	await init_db()
 	services_container = ServicesContainer(bot)
 	setup_logger()
+	logger = logging.getLogger(__name__)
+	logger.info(
+		"STARTUP_COMPLETE | version=0.5.2.1 bot=@moderation_control_bot"
+	)
 	dp = Dispatcher()
 	dp.update.middleware(UserSyncMiddleware())
+	dp.update.middleware(ResponseTimeMiddleware())
 	dp["services"] = services_container
 	for router in get_routers():
 		dp.include_router(router)

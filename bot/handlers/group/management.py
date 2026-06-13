@@ -6,12 +6,14 @@ from bot.filters import ChatTypeFilter
 
 from bot.services.services_container import ServicesContainer
 
+import time
+
 import logging
+
+logger = logging.getLogger(__name__)
 
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
-
-logger = logging.getLogger(__name__)
 
 def get_event_type(
 	old_status: str,
@@ -48,7 +50,11 @@ def get_event_type(
 	return f"{prefix}{old_role}_TO_{new_role}"
 
 @router.chat_member()
-async def chat_member(event: ChatMemberUpdated, services: ServicesContainer):
+async def chat_member(
+	event: ChatMemberUpdated,
+	services: ServicesContainer,
+	request_start: float
+):
 	chat_id = event.chat.id
 	user_id = event.new_chat_member.user.id
 
@@ -112,11 +118,13 @@ async def chat_member(event: ChatMemberUpdated, services: ServicesContainer):
 		getattr(event.new_chat_member, "is_member", None),
 		False
 	)
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)	
 	logger.info(
-		"%s | chat_id=%s user_id=%s",
+		"%s | chat_id=%s user_id=%s response_time=%sms",
 		event_type,
 		chat_id,
-		user_id
+		user_id,
+		response_time
 	)
 
 async def when_bot_added(chat_id: int, services: ServicesContainer):
@@ -134,7 +142,11 @@ async def when_bot_added(chat_id: int, services: ServicesContainer):
 	await services.chats_settings_service.upsert_settings(chat_id, None)
 
 @router.my_chat_member()
-async def my_chat_member(event: ChatMemberUpdated, services: ServicesContainer):
+async def my_chat_member(
+	event: ChatMemberUpdated,
+	services: ServicesContainer,
+	request_start: float
+):
 	chat_id = event.chat.id
 	
 	await services.telegram_service.invalidate_user_admins_cache(
@@ -183,8 +195,10 @@ async def my_chat_member(event: ChatMemberUpdated, services: ServicesContainer):
 		getattr(event.new_chat_member, "is_member", None),
 		True
 	)
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)	
 	logger.info(
-		"%s | chat_id=%s",
+		"%s | chat_id=%s response_time=%sms",
 		event_type,
-		chat_id
+		chat_id,
+		response_time
 	)

@@ -9,6 +9,8 @@ from bot.middleware import ErrorMiddleware, AdminMiddleware
 
 from bot.services.services_container import ServicesContainer
 
+import time
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -19,7 +21,11 @@ router.message.middleware(ErrorMiddleware())
 router.message.middleware(AdminMiddleware())
 
 @router.message(Command("ban", "dban", "sban"))
-async def ban(message: Message, services: ServicesContainer):
+async def ban(
+	message: Message,
+	services: ServicesContainer,
+	request_start: float
+):
 	args = message.text.split()
 	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
@@ -46,18 +52,24 @@ async def ban(message: Message, services: ServicesContainer):
 		event_type = "SBAN"
 	else:
 		event_type = "BAN"
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)
 	logger.info(
-		"%s | chat_id=%s user_id=%s target_id=%s",
+		"%s | chat_id=%s user_id=%s target_id=%s response_time=%sms",
 		event_type,
 		message.chat.id,
 		message.from_user.id,
 		target_id,
+		response_time
 	)
 	if not secret:
 		await message.reply(result)
 
 @router.message(Command("unban"))
-async def unban(message: Message, services: ServicesContainer):
+async def unban(
+	message: Message,
+	services: ServicesContainer,
+	request_start: float
+):
 	args = message.text.split()
 	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
@@ -71,17 +83,23 @@ async def unban(message: Message, services: ServicesContainer):
 	)
 
 	event_type = "UNBAN"
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)
 	logger.info(
-		"%s | chat_id=%s user_id=%s target_id=%s",
+		"%s | chat_id=%s user_id=%s target_id=%s response_time=%sms",
 		event_type,
 		message.chat.id,
 		message.from_user.id,
 		target_id,
+		response_time
 	)
 	await message.reply(result)
 
 @router.message(Command("mute", "dmute", "smute"))
-async def mute(message: Message, services: ServicesContainer):
+async def mute(
+	message: Message,
+	services: ServicesContainer,
+	request_start: float
+):
 	args = message.text.split()
 	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
@@ -108,18 +126,24 @@ async def mute(message: Message, services: ServicesContainer):
 		event_type = "SMUTE"
 	else:
 		event_type = "MUTE"
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)	
 	logger.info(
-		"%s | chat_id=%s user_id=%s target_id=%s",
+		"%s | chat_id=%s user_id=%s target_id=%s response_time=%sms",
 		event_type,
 		message.chat.id,
 		message.from_user.id,
 		target_id,
+		response_time
 	)
 	if not secret:
 		await message.reply(result)
 
 @router.message(Command("unmute"))
-async def unmute(message: Message, services: ServicesContainer):
+async def unmute(
+	message: Message,
+	services: ServicesContainer,
+	request_start: float
+):
 	args = message.text.split()
 	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
@@ -133,17 +157,23 @@ async def unmute(message: Message, services: ServicesContainer):
 	)
 
 	event_type = "UNMUTE"
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)	
 	logger.info(
-		"%s | chat_id=%s user_id=%s target_id=%s",
+		"%s | chat_id=%s user_id=%s target_id=%s response_time=%sms",
 		event_type,
 		message.chat.id,
 		message.from_user.id,
 		target_id,
+		response_time
 	)
 	await message.reply(result)
 
 @router.message(Command("kick", "dkick", "skick"))
-async def kick(message: Message, services: ServicesContainer):
+async def kick(
+	message: Message,
+	services: ServicesContainer,
+	request_start: float
+):
 	args = message.text.split()
 	target_id, target_username = await services.utils_service.get_id_and_name(
 		message,
@@ -168,18 +198,24 @@ async def kick(message: Message, services: ServicesContainer):
 		event_type = "SKICK"
 	else:
 		event_type = "KICK"
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)	
 	logger.info(
-		"%s | chat_id=%s user_id=%s target_id=%s",
+		"%s | chat_id=%s user_id=%s target_id=%s response_time=%sms",
 		event_type,
 		message.chat.id,
 		message.from_user.id,
 		target_id,
+		response_time
 	)
 	if not secret:
 		await message.reply(result)
 
 @router.message(Command("kickme"), flags={"skip_admin": True})
-async def kickme(message: Message, services: ServicesContainer):
+async def kickme(
+	message: Message,
+	services: ServicesContainer,
+	request_start: float
+):
 	args = message.text.split()
 	username = f"@{message.from_user.username}" if message.from_user.username \
 												else message.from_user.full_name
@@ -191,10 +227,12 @@ async def kickme(message: Message, services: ServicesContainer):
 	)
 
 	event_type = "KICKME"
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)
 	logger.info(
-		"%s | chat_id=%s user_id=%s",
+		"%s | chat_id=%s user_id=%s response_time=%sms",
 		event_type,
 		message.chat.id,
-		message.from_user.id
+		message.from_user.id,
+		response_time
 	)
 	await message.reply(result)

@@ -1,12 +1,16 @@
 from aiogram import Router, F, Bot
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, BotCommand
 from aiogram.filters import Command
 from aiogram.enums import ChatType
 from bot.filters import ChatTypeFilter
 
 from bot.keyboards.basic_keyboards import all_help, back_button
 
-from aiogram.types import BotCommand
+import time
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = Router()
 router.message.filter(ChatTypeFilter([ChatType.GROUP, ChatType.SUPERGROUP]))
@@ -40,7 +44,7 @@ async def set_commands(bot: Bot):
     await bot.set_my_commands(commands)
 
 @router.message(Command("start"))
-async def start(message: Message):
+async def start(message: Message, request_start: float):
 	await message.answer(
 		"Hello, I'm AdminBot, a group administration bot!\n\n"
 		"Use /help to get information about all commands or "
@@ -48,8 +52,16 @@ async def start(message: Message):
 		"Also use /privacy to view our privacy policy."
 	)
 
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)
+	logger.info(
+		"START | chat_id=%s user_id=%s response_time=%sms",
+		message.chat.id,
+		message.from_user.id,
+		response_time
+	)
+
 @router.message(Command("help"))
-async def help(message: Message):
+async def help(message: Message, request_start: float):
 	await message.answer(
 		"----- Help ----- \n\n"
 		"This command displays the full list of available commands "
@@ -58,8 +70,16 @@ async def help(message: Message):
 		reply_markup=all_help()
 	)
 
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)
+	logger.info(
+		"HELP | chat_id=%s user_id=%s response_time=%sms",
+		message.chat.id,
+		message.from_user.id,
+		response_time
+	)
+
 @router.callback_query(F.data.startswith("help_"))
-async def help_callback(callback: CallbackQuery):
+async def help_callback(callback: CallbackQuery, request_start: float):
 	if callback.data == "help_admin":
 		await callback.message.edit_text(
 			"---- Admin ---- \n\n"
@@ -80,6 +100,15 @@ async def help_callback(callback: CallbackQuery):
 			"attempt to use admin commands. Enabled by default.",
 			reply_markup=back_button("help")
 		)
+
+		response_time = round((time.perf_counter() - request_start) * 1000, 2)
+		logger.info(
+			"CALLBACK_HELP_ADMIN | chat_id=%s user_id=%s response_time=%sms",
+			callback.message.chat.id,
+			callback.from_user.id,
+			response_time
+		)
+
 	if callback.data == "help_antiflood":
 		pass
 	if callback.data == "help_antiraid":
@@ -119,6 +148,15 @@ async def help_callback(callback: CallbackQuery):
 			"Silent removal with deletion of the bot message.\n",
 			reply_markup=back_button("help")
 		)
+
+		response_time = round((time.perf_counter() - request_start) * 1000, 2)
+		logger.info(
+			"CALLBACK_HELP_BANS | chat_id=%s user_id=%s response_time=%sms",
+			callback.message.chat.id,
+			callback.from_user.id,
+			response_time
+		)
+
 	if callback.data == "help_back":
 		await callback.message.edit_text(
 			"----- Help -----\n\n"
@@ -128,8 +166,16 @@ async def help_callback(callback: CallbackQuery):
 			reply_markup=all_help()
 		)
 
+		response_time = round((time.perf_counter() - request_start) * 1000, 2)
+		logger.info(
+			"CALLBACK_HELP_BACK | chat_id=%s user_id=%s response_time=%sms",
+			callback.message.chat.id,
+			callback.from_user.id,
+			response_time
+		)
+
 @router.message(Command("info"))
-async def info(message: Message):
+async def info(message: Message, request_start: float):
 	await message.answer(
 		"🤖 <b>AdminBot</b>\n\n"
 		"📌 <b>Description:</b>\n"
@@ -137,8 +183,16 @@ async def info(message: Message):
 		"👤 <b>Author:</b>\n"
 		"@F3m_b0y\n\n"
 		"📦 <b>Version:</b>\n"
-		"0.5.2\n\n"
+		"0.5.2.1\n\n"
 		"⚖️ <b>License:</b>\n"
 		"MIT",
 		parse_mode="HTML"
+	)
+
+	response_time = round((time.perf_counter() - request_start) * 1000, 2)
+	logger.info(
+		"INFO | chat_id=%s user_id=%s response_time=%sms",
+		message.chat.id,
+		message.from_user.id,
+		response_time
 	)

@@ -4,25 +4,27 @@ from aiogram.exceptions import TelegramBadRequest
 
 from bot.exceptions import BotError
 
+import time
+
 import logging
 
 logger = logging.getLogger(__name__)
 
 class ErrorMiddleware(BaseMiddleware):
 	async def __call__(self, handler, event, data):
-		adminerror = data.get("adminerror", True)
 		try:
 			return await handler(event, data)
 
 		except BotError as e:
-			logger.warning(e.log(event))
-			if adminerror:
-				try:
-					await event.answer(str(e))
-				except TelegramBadRequest:
-					pass
+			response_time = round(
+				(time.perf_counter() - data["request_start"]) * 1000,
+				2
+			)
 
-		except Exception:
-			logger.exception("Unhandled exception")
-			if adminerror:
-				await event.answer("❌ Незарегистрированная ошибка")
+			logger.warning(
+				"%s response_time=%sms",
+				e.log(event),
+				response_time
+			)
+
+			await event.reply(str(e))
